@@ -17,7 +17,7 @@ You can change color with prop `toolColor={'#color-CSS-Hexa'}`.
 ![Imgur](https://i.imgur.com/K2tCYNR.png)
 ## Getting Started
 
-1. `$ npm install react-native-sketch-draw --save` or `$ yarn add react-native-sketch-draw`
+1. To install from this fork, add to package.json: `"react-native-sketch-draw": "github:cristianoccazinsp/react-native-sketch-draw"`
 2. `$ react-native link react-native-sketch-draw` -- Not needed with RN >= 0.60
 3. For iOS, open your application in Xcode `open /ios/app-name.xcodeproj`.
     1. Go to `app-name/Libraries/RNSketchView.xcodeproj/SketchView` or `pods_proj/react-native-sketch-view/SketchView/`
