@@ -1,6 +1,8 @@
 # react-native-sketch-draw
 
-## For ReactNative v0.53
+## For ReactNative v0.60
+
+Forked from: https://github.com/VGamezz19/react-native-sketch-draw
 
 A React Native component for touch based drawing supporting iOS and Android. Inspired by the libraries [react-native-sketch](https://github.com/jgrancher/react-native-sketch), [react-native-signature-capture](https://github.com/RepairShopr/react-native-signature-capture) and [react-native-sketch-view](https://github.com/keshavkaul/react-native-sketch-view)
 
@@ -16,11 +18,11 @@ You can change color with prop `toolColor={'#color-CSS-Hexa'}`.
 ## Getting Started
 
 1. `$ npm install react-native-sketch-draw --save` or `$ yarn add react-native-sketch-draw`
-2. `$ react-native link react-native-sketch-draw`
+2. `$ react-native link react-native-sketch-draw` -- Not needed with RN >= 0.60
 3. For iOS, open your application in Xcode `open /ios/app-name.xcodeproj`.
-    1. Go to `app-name/Libraries/RNSketchView.xcodeproj/SketchView`
+    1. Go to `app-name/Libraries/RNSketchView.xcodeproj/SketchView` or `pods_proj/react-native-sketch-view/SketchView/`
     2. Drag `SketchDrawContainer.xib` into your application project.
-    3. Click on Copy Bundle Resources and add `SketchDrawContainer.xib`.
+    3. Click on Copy Bundle Resources and add `SketchDrawContainer.xib`. (from Build Phases)
 
 ![Imgur](https://i.imgur.com/g2uJ9s8.png)
 
@@ -80,7 +82,7 @@ export default class DrawBoard extends Component {
         return (
             <View style={{flex: 1, flexDirection: 'column'}}>
                 <SketchDraw style={{flex: 1, backgroundColor: 'white'}} ref="sketchRef"
-                selectedTool={this.state.toolSelected} 
+                selectedTool={this.state.toolSelected}
                 toolColor={'#FFFA38'} //Yelow Example! you can changIT!
                 onSaveSketch={this.onSketchSave.bind(this)}
                 localSourceImagePath={this.props.localSourceImagePath}/>
