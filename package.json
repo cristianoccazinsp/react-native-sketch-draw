@@ -1,6 +1,6 @@
 {
   "name": "react-native-sketch-draw",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "A React Native (v0.53) component for touch based drawing supporting iOS and Android.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,6 @@
   "keywords": [
     "react",
     "react-native",
-    "react-native0.53",
     "ios",
     "android",
     "touch",

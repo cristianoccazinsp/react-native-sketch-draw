@@ -32,7 +32,7 @@ RCT_EXPORT_MODULE(RNSketchView)
 
 -(UIView *)view
 {
-    self.sketchViewContainer = [[[NSBundle mainBundle] loadNibNamed:@"SketchViewContainer" owner:self options:nil] firstObject];
+    self.sketchViewContainer = [[[NSBundle bundleForClass:self.classForCoder] loadNibNamed:@"SketchViewContainer" owner:self options:nil] firstObject];
     return self.sketchViewContainer;
 }
 

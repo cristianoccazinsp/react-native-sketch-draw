@@ -19,7 +19,7 @@ You can change color with prop `toolColor={'#color-CSS-Hexa'}`.
 
 1. To install from this fork, add to package.json: `"react-native-sketch-draw": "github:cristianoccazinsp/react-native-sketch-draw"`
 2. `$ react-native link react-native-sketch-draw` -- Not needed with RN >= 0.60
-3. For iOS, open your application in Xcode `open /ios/app-name.xcodeproj`.
+3. For iOS, open your application in Xcode `open /ios/app-name.xcodeproj`. -- Not needed with RN >= 0.60 and cocoapods
     1. Go to `app-name/Libraries/RNSketchView.xcodeproj/SketchView` or `pods_proj/react-native-sketch-view/SketchView/`
     2. Drag `SketchDrawContainer.xib` into your application project.
     3. Click on Copy Bundle Resources and add `SketchDrawContainer.xib`. (from Build Phases)
