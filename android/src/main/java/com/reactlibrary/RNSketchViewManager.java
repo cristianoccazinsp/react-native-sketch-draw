@@ -121,5 +121,16 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
       return MapBuilder.of("onSaveSketch", MapBuilder.of("registrationName", "onSaveSketch"));
   }
 
+  // if we ever need multiple events
+  // @Override
+  // @Nullable
+  // public Map<String, Object> getExportedCustomDirectEventTypeConstants() {
+  //   MapBuilder.Builder<String, Object> builder = MapBuilder.builder();
+  //   for (Events event : Events.values()) {
+  //     builder.put(event.toString(), MapBuilder.of("registrationName", event.toString()));
+  //   }
+  //   return builder.build();
+  // }
+
 
 }
