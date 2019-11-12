@@ -1,37 +1,63 @@
 {
-  "name": "react-native-sketch-draw",
-  "version": "4.0.0",
-  "description": "A React Native (v0.53) component for touch based drawing supporting iOS and Android.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
+  "_args": [
+    [
+      "github:cristianoccazinsp/react-native-sketch-draw",
+      "/Users/cristiano/Desktop/trabajo/zinspector/mobileRN/zinspector3"
+    ]
+  ],
+  "_from": "github:cristianoccazinsp/react-native-sketch-draw",
+  "_id": "react-native-sketch-draw@github:cristianoccazinsp/react-native-sketch-draw#d4818a1d8fd5080c00ea095cee6c4cbb51d94adb",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/react-native-sketch-draw",
+  "_phantomChildren": {},
+  "_requested": {
     "type": "git",
-    "url": "git+https://github.com/VGamezz19/react-native-sketch-draw.git"
+    "raw": "github:cristianoccazinsp/react-native-sketch-draw",
+    "rawSpec": "github:cristianoccazinsp/react-native-sketch-draw",
+    "saveSpec": "github:cristianoccazinsp/react-native-sketch-draw",
+    "fetchSpec": null,
+    "gitCommittish": null
   },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "github:cristianoccazinsp/react-native-sketch-draw#d4818a1d8fd5080c00ea095cee6c4cbb51d94adb",
+  "_spec": "github:cristianoccazinsp/react-native-sketch-draw",
+  "_where": "/Users/cristiano/Desktop/trabajo/zinspector/mobileRN/zinspector3",
+  "author": {
+    "name": "Victor Gamez",
+    "email": "victor.gamez1596@gmail.com",
+    "url": "https://github.com/VGamezz19"
+  },
+  "bugs": {
+    "url": "https://github.com/VGamezz19/react-native-sketch-draw/issues"
+  },
+  "description": "A React Native (v0.53) component for touch based drawing supporting iOS and Android.",
+  "homepage": "https://github.com/VGamezz19/react-native-sketch-draw#readme",
   "keywords": [
     "react",
     "react-native",
+    "react-native0.53",
     "ios",
     "android",
     "touch",
     "sketch",
     "draw"
   ],
-  "author": {
-    "name": "Victor Gamez",
-    "email": "victor.gamez1596@gmail.com",
-    "url": "https://github.com/VGamezz19"
-  },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/VGamezz19/react-native-sketch-draw/issues"
-  },
-  "homepage": "https://github.com/VGamezz19/react-native-sketch-draw#readme",
-
+  "main": "index.js",
+  "name": "react-native-sketch-draw",
   "peerDependencies": {
     "react-native": ">=0.60.0",
     "prop-types": "^15.6.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VGamezz19/react-native-sketch-draw.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.1.0"
 }

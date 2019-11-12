@@ -4,6 +4,8 @@
 
 Forked from: https://github.com/VGamezz19/react-native-sketch-draw
 
+TODO: Update deprecated code
+
 A React Native component for touch based drawing supporting iOS and Android. Inspired by the libraries [react-native-sketch](https://github.com/jgrancher/react-native-sketch), [react-native-signature-capture](https://github.com/RepairShopr/react-native-signature-capture) and [react-native-sketch-view](https://github.com/keshavkaul/react-native-sketch-view)
 
 This component was written to fulfill the following use cases:
@@ -19,7 +21,7 @@ You can change color with prop `toolColor={'#color-CSS-Hexa'}`.
 
 1. To install from this fork, add to package.json: `"react-native-sketch-draw": "github:cristianoccazinsp/react-native-sketch-draw"`
 2. `$ react-native link react-native-sketch-draw` -- Not needed with RN >= 0.60
-3. For iOS, open your application in Xcode `open /ios/app-name.xcodeproj`. -- Not needed with RN >= 0.60 and cocoapods
+3. For iOS, open your application in Xcode `open /ios/app-name.xcodeproj`.
     1. Go to `app-name/Libraries/RNSketchView.xcodeproj/SketchView` or `pods_proj/react-native-sketch-view/SketchView/`
     2. Drag `SketchDrawContainer.xib` into your application project.
     3. Click on Copy Bundle Resources and add `SketchDrawContainer.xib`. (from Build Phases)
@@ -110,7 +112,9 @@ export default class DrawBoard extends Component {
 ### APIs
 
 1. `clearSketch()` - Clears the view.
-2. `saveSketch()` - Initiates saving of sketch.
+2. `saveSketch(format, quality)` - Initiates saving of sketch.
+    `format`: `JPEG` or `PNG` (default)
+    `quality`: value from 1 to 100 for compression
 3. `changeTool(toolId)` - Changes selected tool.
     * Tool Id can be found using SketchDraw tooltype constants eg. `SketchDraw.constants.toolType.pen.id`
 

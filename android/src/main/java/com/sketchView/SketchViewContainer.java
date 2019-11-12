@@ -25,15 +25,24 @@ public class SketchViewContainer extends LinearLayout {
         addView(sketchView);
     }
 
-    public SketchFile saveToLocalCache() throws IOException {
+    public SketchFile saveToLocalCache(String format, int quality) throws IOException {
 
         Bitmap viewBitmap = Bitmap.createBitmap(sketchView.getWidth(), sketchView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(viewBitmap);
         draw(canvas);
 
-        File cacheFile = File.createTempFile("sketch_", UUID.randomUUID().toString()+".png");
-        FileOutputStream imageOutput = new FileOutputStream(cacheFile);
-        viewBitmap.compress(Bitmap.CompressFormat.PNG, 100, imageOutput);
+        File cacheFile;
+        if(format.equals("PNG")){
+            cacheFile = File.createTempFile("sketch_", UUID.randomUUID().toString() + ".png");
+            FileOutputStream imageOutput = new FileOutputStream(cacheFile);
+            viewBitmap.compress(Bitmap.CompressFormat.PNG, quality, imageOutput);
+        }
+        else{
+            cacheFile = File.createTempFile("sketch_", UUID.randomUUID().toString() + ".jpg");
+            FileOutputStream imageOutput = new FileOutputStream(cacheFile);
+            viewBitmap.compress(Bitmap.CompressFormat.JPEG, quality, imageOutput);
+        }
+
 
         SketchFile sketchFile = new SketchFile();
         sketchFile.localFilePath = cacheFile.getAbsolutePath();;

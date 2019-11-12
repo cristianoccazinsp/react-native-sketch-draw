@@ -7,11 +7,18 @@
     return dispatch_get_main_queue();
 }
 
++ (BOOL)requiresMainQueueSetup
+{
+    return YES;
+}
+
+
 RCT_CUSTOM_VIEW_PROPERTY(selectedTool, NSInteger, SketchViewContainer)
 {
     SketchViewContainer *currentView = !view ? defaultView : view;
     [currentView.sketchView setToolType:[RCTConvert NSInteger:json]];
 }
+
 
 RCT_CUSTOM_VIEW_PROPERTY(toolColor, UIColor, SketchViewContainer)
 {
@@ -28,6 +35,8 @@ RCT_CUSTOM_VIEW_PROPERTY(localSourceImagePath, NSString, SketchViewContainer)
     });
 }
 
+RCT_EXPORT_VIEW_PROPERTY(onSaveSketch, RCTDirectEventBlock);
+
 RCT_EXPORT_MODULE(RNSketchView)
 
 -(UIView *)view
@@ -36,10 +45,10 @@ RCT_EXPORT_MODULE(RNSketchView)
     return self.sketchViewContainer;
 }
 
-RCT_EXPORT_METHOD(saveSketch:(nonnull NSNumber *)reactTag) {
+RCT_EXPORT_METHOD(saveSketch:(nonnull NSNumber *)reactTag toFormat:(NSString *)format toQuality:(NSInteger)quality) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        SketchFile *sketchFile = [self.sketchViewContainer saveToLocalCache];
-        [self onSaveSketch:sketchFile];
+        SketchFile *sketchFile = [self.sketchViewContainer saveToLocalCache:format toQuality:quality];
+        [self _onSaveSketch:sketchFile];
     });
 }
 
@@ -53,14 +62,13 @@ RCT_EXPORT_METHOD(changeTool:(nonnull NSNumber *)reactTag toolId:(NSInteger) too
     [self.sketchViewContainer.sketchView setToolType:toolId];
 }
 
--(void)onSaveSketch:(SketchFile *) sketchFile
+-(void)_onSaveSketch:(SketchFile *) sketchFile
 {
-    [self.bridge.eventDispatcher sendDeviceEventWithName:@"onSaveSketch" body:
-  @{
-    @"localFilePath": sketchFile.localFilePath,
-    @"imageWidth": [NSNumber numberWithFloat:sketchFile.size.width],
-    @"imageHeight": [NSNumber numberWithFloat:sketchFile.size.height]
-    }];
+    self.sketchViewContainer.onSaveSketch(@{
+        @"localFilePath": sketchFile.localFilePath,
+        @"imageWidth": [NSNumber numberWithFloat:sketchFile.size.width],
+        @"imageHeight": [NSNumber numberWithFloat:sketchFile.size.height]
+    });
 }
 
 @end

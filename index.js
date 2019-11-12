@@ -6,51 +6,32 @@ import {
   View,
   UIManager,
   findNodeHandle,
-  DeviceEventEmitter,
   ColorPropType
 } from 'react-native';
 
 class SketchView extends Component {
   constructor(props) {
     super(props);
-    this.onChange = this.onChange.bind(this);
-    this.subscriptions = [];
+    this.onSaveSketch = this.onSaveSketch.bind(this);
   }
 
-  onChange(event) {
-    console.log('save event: ',event.nativeEvent);
-    if (event.nativeEvent.type === "onSaveSketch") {
+  onSaveSketch(event) {
 
-      if (!this.props.onSaveSketch) {
-        return;
-      }
-
-      this.props.onSaveSketch({
-        localFilePath: event.nativeEvent.event.localFilePath,
-        imageWidth: event.nativeEvent.event.imageWidth,
-        imageHeight: event.nativeEvent.event.imageHeight
-      });
+    if (!this.props.onSaveSketch) {
+      return;
     }
-  }
 
-  componentDidMount() {
-    if (this.props.onSaveSketch) {
-      let sub = DeviceEventEmitter.addListener(
-        'onSaveSketch',
-        this.props.onSaveSketch
-      );
-      this.subscriptions.push(sub);
-    }
-  }
+    this.props.onSaveSketch({
+      localFilePath: event.nativeEvent.localFilePath,
+      imageWidth: event.nativeEvent.imageWidth,
+      imageHeight: event.nativeEvent.imageHeight
+    });
 
-  componentWillUnmount() {
-    this.subscriptions.forEach(sub => sub.remove());
-    this.subscriptions = [];
   }
 
   render() {
     return (
-      <RNSketchView {... this.props} onChange={this.onChange}/>
+      <RNSketchView {...this.props} onSaveSketch={this.onSaveSketch}/>
     );
   }
 
@@ -62,11 +43,11 @@ class SketchView extends Component {
     );
   }
 
-  saveSketch() {
+  saveSketch(format, quality) {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
       UIManager.getViewManagerConfig('RNSketchView').Commands.saveSketch,
-      [],
+      [format || 'PNG', quality || 100],
     );
   }
 
@@ -101,7 +82,7 @@ SketchView.propTypes = {
 };
 
 let RNSketchView = requireNativeComponent('RNSketchView', SketchView, {
-  nativeOnly: { onChange: true }
+  nativeOnly: { onSaveSketch: true }
 });
 
 export default SketchView;

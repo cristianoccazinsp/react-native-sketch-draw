@@ -20,19 +20,30 @@
     return NO;
 }
 
--(SketchFile *)saveToLocalCache
+-(SketchFile *)saveToLocalCache:(NSString*)format toQuality:(NSInteger)quality
 {
     UIImage *image = [SketchViewContainer imageWithView:self];
-
+    
     NSURL *tempDir = [NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES];
-    NSString *fileName = [NSString stringWithFormat:@"sketch_%@.png", [[NSUUID UUID] UUIDString]];
-    NSURL *fileURL = [tempDir URLByAppendingPathComponent:fileName];
-
-    //NSLog(@"fileURL: %@", [fileURL path]);
-
-    NSData *imageData = UIImagePNGRepresentation(image);
-    [imageData writeToURL:fileURL atomically:YES];
-
+    NSURL *fileURL;
+    
+    if ([format isEqualToString:@"PNG"]) {
+        NSString *fileName = [NSString stringWithFormat:@"sketch_%@.png", [[NSUUID UUID] UUIDString]];
+        fileURL = [tempDir URLByAppendingPathComponent:fileName];
+        
+        NSData *imageData = UIImagePNGRepresentation(image);
+        [imageData writeToURL:fileURL atomically:YES];
+        
+    }
+    else{
+        NSString *fileName = [NSString stringWithFormat:@"sketch_%@.jpg", [[NSUUID UUID] UUIDString]];
+        fileURL = [tempDir URLByAppendingPathComponent:fileName];
+        
+        NSData *imageData = UIImageJPEGRepresentation(image, quality / 100.0);
+        [imageData writeToURL:fileURL atomically:YES];        
+    }
+    
+    
     SketchFile *sketchFile = [[SketchFile alloc] init];
     sketchFile.localFilePath = [fileURL path];
     sketchFile.size = [image size];

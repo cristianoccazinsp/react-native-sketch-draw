@@ -1,13 +1,8 @@
-
-#if __has_include("RCTViewManager.h")
-#import "RCTViewManager.h"
-#else
 #import <React/RCTViewManager.h>
-#endif
-
+#import <React/RCTBridgeModule.h>
 #import "SketchViewContainer.h"
 
-@interface RNSketchViewManager : RCTViewManager
+@interface RNSketchViewManager : RCTViewManager <RCTBridgeModule>
 
 @property SketchViewContainer *sketchViewContainer;
 

@@ -36,7 +36,7 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
   private static final int COMMAND_CLEAR_SKETCH = 321;
   private static final int COMMAND_SAVE_SKETCH = 780;
   private static final int COMMAND_CHANGE_TOOL = 406;
-  
+
   @Override
   public String getName() {
     return RN_PACKAGE;
@@ -89,7 +89,7 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
         return;
       case COMMAND_SAVE_SKETCH:
         try {
-          SketchFile sketchFile = root.saveToLocalCache();
+          SketchFile sketchFile = root.saveToLocalCache(args.getString(0), args.getInt(1));
           onSaveSketch(root, sketchFile);
           return;
         } catch (IOException e) {
@@ -105,15 +105,21 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
     event.putString("localFilePath", sketchFile.localFilePath);
     event.putInt("imageWidth", sketchFile.width);
     event.putInt("imageHeight", sketchFile.height);
-    sendEvent(root, "onSaveSketch", event);
+
+    ReactContext reactContext = (ReactContext) root.getContext();
+
+    reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+      root.getId(),
+      "onSaveSketch",
+      event
+    );
   }
 
-  private void sendEvent(View view, String eventType, WritableMap event) {
-    WritableMap nativeEvent = Arguments.createMap();
-    nativeEvent.putString("type", eventType);
-    nativeEvent.putMap("event", event);
-    ReactContext reactContext = (ReactContext) view.getContext();
-    reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "topChange", nativeEvent);
+
+  @Override
+  public @Nullable Map getExportedCustomDirectEventTypeConstants() {
+      return MapBuilder.of("onSaveSketch", MapBuilder.of("registrationName", "onSaveSketch"));
   }
+
 
 }
