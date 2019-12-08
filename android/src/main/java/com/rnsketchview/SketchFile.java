@@ -1,4 +1,4 @@
-package com.sketchView;
+package com.rnsketchview;
 
 /**
  * Created by keshav on 07/04/17.

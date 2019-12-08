@@ -1,4 +1,4 @@
-package com.sketchView.tools;
+package com.rnsketchview.tools;
 
 /**
  * Created by keshav on 10/04/17.

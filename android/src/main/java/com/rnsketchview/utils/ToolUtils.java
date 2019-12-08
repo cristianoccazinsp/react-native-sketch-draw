@@ -1,4 +1,4 @@
-package com.sketchView.utils;
+package com.rnsketchview.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

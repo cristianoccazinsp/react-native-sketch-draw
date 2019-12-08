@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.rnsketchview;
 
 import android.graphics.Color;
 import androidx.annotation.NonNull;
@@ -15,8 +15,8 @@ import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.sketchView.SketchFile;
-import com.sketchView.SketchViewContainer;
+import com.rnsketchview.SketchFile;
+import com.rnsketchview.SketchViewContainer;
 
 import java.io.IOException;
 import java.util.Locale;

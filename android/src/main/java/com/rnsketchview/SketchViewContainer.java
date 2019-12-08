@@ -1,4 +1,4 @@
-package com.sketchView;
+package com.rnsketchview;
 
 import android.content.Context;
 import android.graphics.Bitmap;

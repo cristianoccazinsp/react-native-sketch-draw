@@ -4,10 +4,28 @@ import PropTypes from 'prop-types';
 import {
   requireNativeComponent,
   View,
+  PanResponder,
+  Alert,
   UIManager,
   findNodeHandle,
   ColorPropType
 } from 'react-native';
+
+// so events are not bubbled to the top elements
+let viewResponder = PanResponder.create({
+  onStartShouldSetPanResponder: (evt, gestureState) => true,
+  onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+  onMoveShouldSetPanResponder: (evt, gestureState) => true,
+  onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+  onPanResponderTerminationRequest: (evt, gestureState) => {
+    return false;
+  },
+  onShouldBlockNativeResponder: (evt, gestureState) => false,
+  onPanResponderRelease: (evt, gestureState) => {
+  },
+  onPanResponderTerminate: (evt, gestureState) => {
+  },
+});
 
 class SketchView extends Component {
   constructor(props) {
@@ -31,7 +49,7 @@ class SketchView extends Component {
 
   render() {
     return (
-      <RNSketchView {...this.props} onSaveSketch={this.onSaveSketch}/>
+      <RNSketchView {...this.props} onSaveSketch={this.onSaveSketch} {...viewResponder.panHandlers}/>
     );
   }
 
