@@ -18,7 +18,7 @@ let viewResponder = PanResponder.create({
   onMoveShouldSetPanResponder: (evt, gestureState) => true,
   onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
   onPanResponderTerminationRequest: (evt, gestureState) => {
-    return false;
+    return true;
   },
   onShouldBlockNativeResponder: (evt, gestureState) => false,
   onPanResponderRelease: (evt, gestureState) => {
