@@ -61,6 +61,14 @@ class SketchView extends Component {
     );
   }
 
+  undoSketch() {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.getViewManagerConfig('RNSketchView').Commands.undoSketch,
+      [],
+    );
+  }
+
   saveSketch(format, quality) {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
@@ -96,8 +104,13 @@ SketchView.propTypes = {
   ...View.propTypes,
   selectedTool: PropTypes.number,
   toolColor: ColorPropType,
-  localSourceImagePath: PropTypes.string
+  localSourceImagePath: PropTypes.string,
+  maxUndo: PropTypes.number
 };
+
+SketchView.defaultProps = {
+  maxUndo: 10
+}
 
 let RNSketchView = requireNativeComponent('RNSketchView', SketchView, {
   nativeOnly: { onSaveSketch: true }

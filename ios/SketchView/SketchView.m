@@ -1,6 +1,8 @@
 #import "SketchView.h"
 #import "PenSketchTool.h"
 #import "EraserSketchTool.h"
+#import "NSMutableArray+QueueStack.h"
+
 
 @implementation SketchView
 {
@@ -9,6 +11,8 @@
     SketchTool *eraseTool;
     
     UIImage *incrementalImage;
+    NSMutableArray *stack;
+    NSInteger maxUndo;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -21,6 +25,8 @@
 - (void) initialize
 {
     [self setMultipleTouchEnabled:NO];
+    maxUndo = 10; // keep it small so we don't overflow our memory
+    stack = [NSMutableArray array];
     penTool = [[PenSketchTool alloc] initWithTouchView:self];
     eraseTool = [[EraserSketchTool alloc] initWithTouchView:self];
     
@@ -44,6 +50,14 @@
     }
 }
 
+-(void)setMaxUndo:(NSInteger)max
+{
+    maxUndo = max;
+    while([stack count] >= maxUndo){
+        [stack queuePop];
+    }
+}
+
 -(void)setToolColor:(UIColor *)rgba
 {
     [(PenSketchTool *)penTool setToolColor:rgba];
@@ -51,6 +65,14 @@
 
 -(void)setViewImage:(UIImage *)image
 {
+    if(incrementalImage != nil){
+        // if stack full, remove oldest
+        if([stack count] >= maxUndo){
+            [stack queuePop];
+        }
+        
+        [stack queuePush:incrementalImage];
+    }
     incrementalImage = image;
     [self setNeedsDisplay];
 }
@@ -60,6 +82,17 @@
     incrementalImage = nil;
     [currentTool clear];
     [self setNeedsDisplay];
+}
+
+-(void) undo
+{
+    UIImage *prev = [stack stackPop];
+    if(prev){
+        incrementalImage = prev;
+        [currentTool clear];
+        [self setNeedsDisplay];
+    }
+    
 }
 
 // Only override drawRect: if you perform custom drawing.

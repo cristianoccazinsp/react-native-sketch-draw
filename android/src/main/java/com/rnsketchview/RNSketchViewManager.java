@@ -31,9 +31,11 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
   private static final String PROPS_TOOL_COLOR = "toolColor";
 
   private static final String PROPS_SELECTED_TOOL = "selectedTool";
+  private static final String PROPS_MAX_UNDO = "maxUndo";
   private static final String PROPS_LOCAL_SOURCE_IMAGE_PATH  = "localSourceImagePath";
 
   private static final int COMMAND_CLEAR_SKETCH = 321;
+  private static final int COMMAND_UNDO_SKETCH = 322;
   private static final int COMMAND_SAVE_SKETCH = 780;
   private static final int COMMAND_CHANGE_TOOL = 406;
 
@@ -52,6 +54,11 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
     viewContainer.sketchView.setToolType(toolId);
   }
 
+  @ReactProp(name = PROPS_MAX_UNDO)
+  public void setMaxUndo(SketchViewContainer viewContainer, @NonNull Integer max) {
+    viewContainer.sketchView.setMaxUndo(max);
+  }
+
   @ReactProp(name = PROPS_TOOL_COLOR, defaultInt = Color.BLACK, customType = "Color")
   public void setToolColor(SketchViewContainer viewContainer, @NonNull Integer color) {
     viewContainer.sketchView.setToolColor(color);
@@ -68,6 +75,8 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
     return MapBuilder.of(
             "clearSketch",
             COMMAND_CLEAR_SKETCH,
+            "undoSketch",
+            COMMAND_UNDO_SKETCH,
             "saveSketch",
             COMMAND_SAVE_SKETCH,
             "changeTool",
@@ -81,6 +90,9 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
     switch (commandId) {
       case COMMAND_CLEAR_SKETCH:
         root.sketchView.clear();
+        return;
+      case COMMAND_UNDO_SKETCH:
+        root.sketchView.undo();
         return;
       case COMMAND_CHANGE_TOOL:
         Assertions.assertNotNull(args);

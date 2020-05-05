@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
+import java.util.LinkedList;
 
 import com.rnsketchview.tools.EraseSketchTool;
 import com.rnsketchview.tools.PenSketchTool;
@@ -18,15 +19,18 @@ import com.rnsketchview.tools.SketchTool;
 
 public class SketchView extends View {
 
+    int maxUndo = 10;
     SketchTool currentTool;
     SketchTool penTool;
     SketchTool eraseTool;
 
     Bitmap incrementalImage;
+    LinkedList<Bitmap> stack;
 
     public SketchView(Context context) {
         super(context);
 
+        stack = new LinkedList<Bitmap>();
         penTool = new PenSketchTool(this);
         eraseTool = new EraseSketchTool(this);
         setToolType(SketchTool.TYPE_PEN);
@@ -47,11 +51,29 @@ public class SketchView extends View {
         }
     }
 
+    void setMaxUndo(int max){
+        maxUndo = max;
+        synchronized(this){
+            while(stack.size() >= maxUndo){
+                stack.pollFirst();
+            }
+        }
+    }
+
     public void setToolColor(int toolColor) {
         ((PenSketchTool) penTool).setToolColor(toolColor);
     }
 
     public void setViewImage(Bitmap bitmap) {
+        if(incrementalImage != null){
+            synchronized(this){
+                if(stack.size() >= maxUndo){
+                    stack.pollFirst();
+                }
+
+                stack.addLast(incrementalImage);
+            }
+        }
         incrementalImage = bitmap;
         invalidate();
     }
@@ -67,6 +89,15 @@ public class SketchView extends View {
         incrementalImage = null;
         currentTool.clear();
         invalidate();
+    }
+
+    public void undo() {
+        Bitmap prev = stack.pollLast();
+        if(prev != null){
+            incrementalImage = prev;
+            currentTool.clear();
+            invalidate();
+        }
     }
 
     @Override

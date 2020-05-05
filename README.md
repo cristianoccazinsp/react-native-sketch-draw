@@ -21,12 +21,6 @@ You can change color with prop `toolColor={'#color-CSS-Hexa'}`.
 
 1. To install from this fork, add to package.json: `"react-native-sketch-draw": "github:cristianoccazinsp/react-native-sketch-draw"`
 2. `$ react-native link react-native-sketch-draw` -- Not needed with RN >= 0.60
-3. For iOS, open your application in Xcode `open /ios/app-name.xcodeproj`.
-    1. Go to `app-name/Libraries/RNSketchView.xcodeproj/SketchView` or `pods_proj/react-native-sketch-view/SketchView/`
-    2. Drag `SketchDrawContainer.xib` into your application project.
-    3. Click on Copy Bundle Resources and add `SketchDrawContainer.xib`. (from Build Phases)
-
-![Imgur](https://i.imgur.com/g2uJ9s8.png)
 
 ## Usage
 
@@ -112,10 +106,11 @@ export default class DrawBoard extends Component {
 ### APIs
 
 1. `clearSketch()` - Clears the view.
-2. `saveSketch(format, quality)` - Initiates saving of sketch.
+3. `undo()` - Undos the last operation.
+3. `saveSketch(format, quality)` - Initiates saving of sketch.
     `format`: `JPEG` or `PNG` (default)
     `quality`: value from 1 to 100 for compression
-3. `changeTool(toolId)` - Changes selected tool.
+4. `changeTool(toolId)` - Changes selected tool.
     * Tool Id can be found using SketchDraw tooltype constants eg. `SketchDraw.constants.toolType.pen.id`
 
 #### Tool Types
@@ -133,6 +128,7 @@ export default class DrawBoard extends Component {
         * `localFilePath` - Local file path of the saved image.
         * `imageWidth` - Width of the saved image.
         * `imageHeight` - Height of the saved image.
+5. `maxUndo` - Max number of operations to store in memory for undo calls (default 10)
 
 ## License
 

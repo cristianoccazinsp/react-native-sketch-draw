@@ -19,6 +19,11 @@ RCT_CUSTOM_VIEW_PROPERTY(selectedTool, NSInteger, SketchViewContainer)
     [currentView.sketchView setToolType:[RCTConvert NSInteger:json]];
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(maxUndo, NSInteger, SketchViewContainer)
+{
+    SketchViewContainer *currentView = !view ? defaultView : view;
+    [currentView.sketchView setMaxUndo:[RCTConvert NSInteger:json]];
+}
 
 RCT_CUSTOM_VIEW_PROPERTY(toolColor, UIColor, SketchViewContainer)
 {
@@ -55,6 +60,12 @@ RCT_EXPORT_METHOD(saveSketch:(nonnull NSNumber *)reactTag toFormat:(NSString *)f
 RCT_EXPORT_METHOD(clearSketch:(nonnull NSNumber *)reactTag) {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.sketchViewContainer.sketchView clear];
+    });
+}
+
+RCT_EXPORT_METHOD(undoSketch:(nonnull NSNumber *)reactTag) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.sketchViewContainer.sketchView undo];
     });
 }
 

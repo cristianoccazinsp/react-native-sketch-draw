@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4ED44F292460B9F5004E05A6 /* NSMutableArray+QueueStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ED44F272460B9F4004E05A6 /* NSMutableArray+QueueStack.m */; };
 		6B37E23B1E9D4235006883C6 /* SketchFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B37E2351E9D4235006883C6 /* SketchFile.m */; };
 		6B37E23C1E9D4235006883C6 /* SketchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B37E2371E9D4235006883C6 /* SketchView.m */; };
 		6B37E23D1E9D4235006883C6 /* SketchViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B37E2391E9D4235006883C6 /* SketchViewContainer.m */; };
@@ -91,6 +92,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNSketchView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNSketchView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ED44F272460B9F4004E05A6 /* NSMutableArray+QueueStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueStack.m"; path = "SketchView/NSMutableArray+QueueStack.m"; sourceTree = SOURCE_ROOT; };
+		4ED44F282460B9F5004E05A6 /* NSMutableArray+QueueStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueueStack.h"; path = "SketchView/NSMutableArray+QueueStack.h"; sourceTree = SOURCE_ROOT; };
 		6B37E2341E9D4235006883C6 /* SketchFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchFile.h; path = SketchView/SketchFile.h; sourceTree = SOURCE_ROOT; };
 		6B37E2351E9D4235006883C6 /* SketchFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchFile.m; path = SketchView/SketchFile.m; sourceTree = SOURCE_ROOT; };
 		6B37E2361E9D4235006883C6 /* SketchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchView.h; path = SketchView/SketchView.h; sourceTree = SOURCE_ROOT; };
@@ -192,6 +195,8 @@
 			children = (
 				6B37E2341E9D4235006883C6 /* SketchFile.h */,
 				6B37E2351E9D4235006883C6 /* SketchFile.m */,
+				4ED44F282460B9F5004E05A6 /* NSMutableArray+QueueStack.h */,
+				4ED44F272460B9F4004E05A6 /* NSMutableArray+QueueStack.m */,
 				6B37E2361E9D4235006883C6 /* SketchView.h */,
 				6B37E2371E9D4235006883C6 /* SketchView.m */,
 				6B37E2381E9D4235006883C6 /* SketchViewContainer.h */,
@@ -242,6 +247,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
@@ -332,6 +338,7 @@
 				B3E7B58A1CC2AC0600A0062D /* RNSketchViewManager.m in Sources */,
 				6B37E24D1E9D4257006883C6 /* PenSketchTool.m in Sources */,
 				6B37E24A1E9D4257006883C6 /* EraserSketchTool.m in Sources */,
+				4ED44F292460B9F5004E05A6 /* NSMutableArray+QueueStack.m in Sources */,
 				6B37E23B1E9D4235006883C6 /* SketchFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
