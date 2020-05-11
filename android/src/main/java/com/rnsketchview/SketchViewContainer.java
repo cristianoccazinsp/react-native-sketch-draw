@@ -6,6 +6,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.widget.LinearLayout;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,7 +26,7 @@ public class SketchViewContainer extends LinearLayout {
 
     public SketchViewContainer(Context context) {
         super(context);
-        sketchView = new SketchView(context);
+        sketchView = new SketchView(context, this);
         addView(sketchView);
     }
 
@@ -62,6 +67,19 @@ public class SketchViewContainer extends LinearLayout {
             return true;
         }
         return false;
+    }
+
+    public void onDrawSketch(int stackCount){
+        WritableMap event = Arguments.createMap();
+        event.putInt("stackCount", stackCount);
+
+        ReactContext reactContext = (ReactContext)getContext();
+
+        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+            getId(),
+            RNSketchViewManager.EVENT_ON_DRAW_SKETCH,
+            event
+        );
     }
 
 }

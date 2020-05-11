@@ -39,6 +39,10 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
   private static final int COMMAND_SAVE_SKETCH = 780;
   private static final int COMMAND_CHANGE_TOOL = 406;
 
+  public static final String EVENT_ON_SAVE_SKETCH = "onSaveSketch";
+  public static final String EVENT_ON_DRAW_SKETCH = "onDrawSketch";
+
+
   @Override
   public String getName() {
     return RN_PACKAGE;
@@ -122,15 +126,19 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
 
     reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
       root.getId(),
-      "onSaveSketch",
+      EVENT_ON_SAVE_SKETCH,
       event
     );
   }
 
-
   @Override
   public @Nullable Map getExportedCustomDirectEventTypeConstants() {
-      return MapBuilder.of("onSaveSketch", MapBuilder.of("registrationName", "onSaveSketch"));
+    MapBuilder.Builder<String, Object> builder = MapBuilder.builder();
+
+    builder.put(EVENT_ON_SAVE_SKETCH, MapBuilder.of("registrationName", EVENT_ON_SAVE_SKETCH));
+    builder.put(EVENT_ON_DRAW_SKETCH, MapBuilder.of("registrationName", EVENT_ON_DRAW_SKETCH));
+
+    return builder.build();
   }
 
   // if we ever need multiple events

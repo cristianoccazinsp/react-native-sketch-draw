@@ -10,6 +10,7 @@
 
 @implementation SketchViewContainer
 
+
 -(BOOL)openSketchFile:(NSString *)localFilePath
 {
     UIImage *image = [UIImage imageWithContentsOfFile:localFilePath];

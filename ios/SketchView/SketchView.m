@@ -2,6 +2,7 @@
 #import "PenSketchTool.h"
 #import "EraserSketchTool.h"
 #import "NSMutableArray+QueueStack.h"
+#import "SketchViewContainer.h"
 
 
 @implementation SketchView
@@ -53,8 +54,13 @@
 -(void)setMaxUndo:(NSInteger)max
 {
     maxUndo = max;
+    NSUInteger initialSize = [stack count];
     while([stack count] >= maxUndo){
         [stack queuePop];
+    }
+    
+    if(initialSize != [stack count]){
+        [self onDrawSketch];
     }
 }
 
@@ -73,25 +79,39 @@
         
         [stack queuePush:incrementalImage];
     }
+    // if prev image is null,
+    // add a dummy stack element so we can undo it too
+    else{
+        [stack queuePush:[NSNull null]];
+    }
+    
     incrementalImage = image;
     [self setNeedsDisplay];
+    [self onDrawSketch];
 }
 
 -(void) clear
 {
+    stack = [NSMutableArray array];
     incrementalImage = nil;
     [currentTool clear];
     [self setNeedsDisplay];
+    [self onDrawSketch];
 }
 
 -(void) undo
 {
     UIImage *prev = [stack stackPop];
-    if(prev){
+    if(prev && (prev != [NSNull null])){
         incrementalImage = prev;
-        [currentTool clear];
-        [self setNeedsDisplay];
     }
+    else{
+        incrementalImage = nil;
+    }
+    
+    [currentTool clear];
+    [self setNeedsDisplay];
+    [self onDrawSketch];
     
 }
 
@@ -129,6 +149,18 @@
 {
     [self setViewImage:[self drawBitmap]];
     [currentTool clear];
+}
+
+-(void)onDrawSketch
+{
+    // get container view
+    SketchViewContainer * parent = (SketchViewContainer *)self.superview;
+    
+    if(parent){
+        parent.onDrawSketch(@{
+            @"stackCount": @([stack count])
+        });
+    }
 }
 
 -(UIImage *)drawBitmap

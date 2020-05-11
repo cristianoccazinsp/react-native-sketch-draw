@@ -31,6 +31,7 @@ class SketchView extends Component {
   constructor(props) {
     super(props);
     this.onSaveSketch = this.onSaveSketch.bind(this);
+    this.onDrawSketch = this.onDrawSketch.bind(this);
   }
 
   onSaveSketch(event) {
@@ -44,12 +45,24 @@ class SketchView extends Component {
       imageWidth: event.nativeEvent.imageWidth,
       imageHeight: event.nativeEvent.imageHeight
     });
+  }
 
+  onDrawSketch(event){
+    if(this.props.onDrawSketch){
+      this.props.onDrawSketch({
+        stackCount: event.nativeEvent.stackCount
+      })
+    }
   }
 
   render() {
     return (
-      <RNSketchView {...this.props} onSaveSketch={this.onSaveSketch} {...viewResponder.panHandlers}/>
+      <RNSketchView
+        {...this.props}
+        onSaveSketch={this.onSaveSketch}
+        onDrawSketch={this.onDrawSketch}
+        {...viewResponder.panHandlers}
+      />
     );
   }
 
@@ -105,7 +118,8 @@ SketchView.propTypes = {
   selectedTool: PropTypes.number,
   toolColor: ColorPropType,
   localSourceImagePath: PropTypes.string,
-  maxUndo: PropTypes.number
+  maxUndo: PropTypes.number,
+  onDrawSketch: PropTypes.func
 };
 
 SketchView.defaultProps = {
@@ -113,7 +127,10 @@ SketchView.defaultProps = {
 }
 
 let RNSketchView = requireNativeComponent('RNSketchView', SketchView, {
-  nativeOnly: { onSaveSketch: true }
+  nativeOnly: {
+    onSaveSketch: true,
+    onDrawSketch: true
+  }
 });
 
 export default SketchView;

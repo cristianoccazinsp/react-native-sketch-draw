@@ -106,7 +106,7 @@ export default class DrawBoard extends Component {
 ### APIs
 
 1. `clearSketch()` - Clears the view.
-3. `undo()` - Undos the last operation.
+3. `undo()` - Undos the last operation. Calling this with a pre-loaded image and an empty stack will also clear it
 3. `saveSketch(format, quality)` - Initiates saving of sketch.
     `format`: `JPEG` or `PNG` (default)
     `quality`: value from 1 to 100 for compression
@@ -129,6 +129,9 @@ export default class DrawBoard extends Component {
         * `imageWidth` - Width of the saved image.
         * `imageHeight` - Height of the saved image.
 5. `maxUndo` - Max number of operations to store in memory for undo calls (default 10)
+6. `onDrawSketch(event)` - Callback fired after each "committed" draw (including undo and clears)
+    * `event`: contains the undo stack count, useful to show/hide the undo button.
+    * `{stackCount: int}`
 
 ## License
 

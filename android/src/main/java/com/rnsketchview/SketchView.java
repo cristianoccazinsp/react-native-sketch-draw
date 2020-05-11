@@ -19,6 +19,7 @@ import com.rnsketchview.tools.SketchTool;
 
 public class SketchView extends View {
 
+    SketchViewContainer mContainer;
     int maxUndo = 10;
     SketchTool currentTool;
     SketchTool penTool;
@@ -27,14 +28,14 @@ public class SketchView extends View {
     Bitmap incrementalImage;
     LinkedList<Bitmap> stack;
 
-    public SketchView(Context context) {
+    public SketchView(Context context, SketchViewContainer container) {
         super(context);
 
+        mContainer = container;
         stack = new LinkedList<Bitmap>();
         penTool = new PenSketchTool(this);
         eraseTool = new EraseSketchTool(this);
         setToolType(SketchTool.TYPE_PEN);
-
         setBackgroundColor(Color.TRANSPARENT);
     }
 
@@ -53,9 +54,15 @@ public class SketchView extends View {
 
     void setMaxUndo(int max){
         maxUndo = max;
+
         synchronized(this){
+            int initialSize = stack.size();
+
             while(stack.size() >= maxUndo){
                 stack.pollFirst();
+            }
+            if(initialSize != stack.size()){
+                mContainer.onDrawSketch(stack.size());
             }
         }
     }
@@ -65,39 +72,49 @@ public class SketchView extends View {
     }
 
     public void setViewImage(Bitmap bitmap) {
-        if(incrementalImage != null){
-            synchronized(this){
+        synchronized(this){
+            if(incrementalImage != null){
                 if(stack.size() >= maxUndo){
                     stack.pollFirst();
                 }
-
                 stack.addLast(incrementalImage);
+            }
+            // if prev image is null,
+            // add a dummy stack element so we can undo it too
+            else{
+                stack.addLast(null);
             }
         }
         incrementalImage = bitmap;
         invalidate();
+        mContainer.onDrawSketch(stack.size());
     }
 
     Bitmap drawBitmap() {
         Bitmap viewBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(viewBitmap);
         draw(canvas);
-        return  viewBitmap;
+        return viewBitmap;
     }
 
     public void clear() {
+        synchronized(this){
+            // clear stack as well
+            stack = new LinkedList<Bitmap>();
+        }
         incrementalImage = null;
         currentTool.clear();
         invalidate();
+        mContainer.onDrawSketch(stack.size());
     }
 
     public void undo() {
+        // null is also handled
         Bitmap prev = stack.pollLast();
-        if(prev != null){
-            incrementalImage = prev;
-            currentTool.clear();
-            invalidate();
-        }
+        incrementalImage = prev;
+        currentTool.clear();
+        invalidate();
+        mContainer.onDrawSketch(stack.size());
     }
 
     @Override

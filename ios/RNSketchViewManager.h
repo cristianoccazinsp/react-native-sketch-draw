@@ -4,7 +4,5 @@
 
 @interface RNSketchViewManager : RCTViewManager <RCTBridgeModule>
 
-@property SketchViewContainer *sketchViewContainer;
-
 @end
   
