@@ -54,7 +54,7 @@ RCT_EXPORT_MODULE(RNSketchView)
 }
 
 RCT_EXPORT_METHOD(saveSketch:(nonnull NSNumber *)reactTag toFormat:(NSString *)format toQuality:(NSInteger)quality) {
-    
+
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, SketchViewContainer *> *viewRegistry) {
         SketchViewContainer *view = viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[SketchViewContainer class]]) {
@@ -78,7 +78,7 @@ RCT_EXPORT_METHOD(clearSketch:(nonnull NSNumber *)reactTag) {
 }
 
 RCT_EXPORT_METHOD(undoSketch:(nonnull NSNumber *)reactTag) {
-    
+
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, SketchViewContainer *> *viewRegistry) {
         SketchViewContainer *view = viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[SketchViewContainer class]]) {
@@ -89,17 +89,6 @@ RCT_EXPORT_METHOD(undoSketch:(nonnull NSNumber *)reactTag) {
     }];
 }
 
-RCT_EXPORT_METHOD(changeTool:(nonnull NSNumber *)reactTag toolId:(NSInteger) toolId) {
-    
-    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, SketchViewContainer *> *viewRegistry) {
-        SketchViewContainer *view = viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[SketchViewContainer class]]) {
-            RCTLogError(@"Cannot find SketchViewContainer with tag #%@", reactTag);
-            return;
-        }
-        [view.sketchView setToolType:toolId];
-    }];
-}
 
 -(void)_onSaveSketch:(SketchFile *) sketchFile withContainer:(SketchViewContainer*)container
 {

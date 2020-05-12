@@ -82,9 +82,7 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
             "undoSketch",
             COMMAND_UNDO_SKETCH,
             "saveSketch",
-            COMMAND_SAVE_SKETCH,
-            "changeTool",
-            COMMAND_CHANGE_TOOL);
+            COMMAND_SAVE_SKETCH);
   }
 
   @Override

@@ -89,15 +89,6 @@ class SketchView extends Component {
       [format || 'PNG', quality || 100],
     );
   }
-
-  changeTool(toolId) {
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this),
-      UIManager.getViewManagerConfig('RNSketchView').changeTool,
-      [toolId],
-    );
-  }
-
 }
 
 SketchView.constants = {

@@ -110,8 +110,6 @@ export default class DrawBoard extends Component {
 3. `saveSketch(format, quality)` - Initiates saving of sketch.
     `format`: `JPEG` or `PNG` (default)
     `quality`: value from 1 to 100 for compression
-4. `changeTool(toolId)` - Changes selected tool.
-    * Tool Id can be found using SketchDraw tooltype constants eg. `SketchDraw.constants.toolType.pen.id`
 
 #### Tool Types
 
@@ -121,6 +119,7 @@ export default class DrawBoard extends Component {
 ### Props
 
 1. `selectedTool` - Set the tool id to be selected.
+    *  Tool Id can be found using SketchDraw tooltype constants eg. `SketchDraw.constants.toolType.pen.id`
 2. `toolColor` - Set color for pen, using CSS colors.
 3. `localSourceImagePath` - Local file path of the image.
 4. `onSaveSketch(saveArgs)` - Callback when saving is complete.
