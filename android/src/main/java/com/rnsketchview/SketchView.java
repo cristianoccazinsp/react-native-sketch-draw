@@ -11,12 +11,9 @@ import java.util.LinkedList;
 import com.rnsketchview.tools.EraseSketchTool;
 import com.rnsketchview.tools.PenSketchTool;
 import com.rnsketchview.tools.RectangleTool;
+import com.rnsketchview.tools.ArrowTool;
 import com.rnsketchview.tools.SketchTool;
 
-
-/**
- * Created by keshav on 05/04/17.
- */
 
 public class SketchView extends View {
 
@@ -26,6 +23,7 @@ public class SketchView extends View {
     PenSketchTool penTool;
     EraseSketchTool eraseTool;
     RectangleTool rectangleTool;
+    ArrowTool arrowTool;
 
     Bitmap incrementalImage;
     LinkedList<Bitmap> stack;
@@ -38,6 +36,7 @@ public class SketchView extends View {
         penTool = new PenSketchTool(this);
         eraseTool = new EraseSketchTool(this);
         rectangleTool = new RectangleTool(this);
+        arrowTool = new ArrowTool(this);
 
         setToolType(SketchTool.TYPE_PEN);
         setBackgroundColor(Color.TRANSPARENT);
@@ -53,6 +52,9 @@ public class SketchView extends View {
                 break;
             case SketchTool.TYPE_RECTANGLE:
                 currentTool = rectangleTool;
+                break;
+            case SketchTool.TYPE_ARROW:
+                currentTool = arrowTool;
                 break;
             default:
                 currentTool = penTool;
@@ -79,6 +81,7 @@ public class SketchView extends View {
     public void setToolColor(int toolColor) {
         penTool.setToolColor(toolColor);
         rectangleTool.setToolColor(toolColor);
+        arrowTool.setToolColor(toolColor);
     }
 
     public int getToolColor() {

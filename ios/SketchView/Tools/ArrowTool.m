@@ -1,8 +1,12 @@
-#import "RectangleTool.h"
+#include <math.h>
+#import "ArrowTool.h"
 #import "Paint.h"
 
 
-@implementation RectangleTool{
+#define POINTER_LINE_LENGTH (20)
+
+
+@implementation ArrowTool{
     UIBezierPath *path;
     Paint *paint;
     CGPoint startPoint;
@@ -78,8 +82,20 @@
 
 -(void)setPathRect:(CGPoint)point
 {
-    // we can use negative width/height and it works fine
-    path = [UIBezierPath bezierPathWithRect:CGRectMake(startPoint.x, startPoint.y, point.x - startPoint.x, point.y - startPoint.y)];
+    path = [UIBezierPath bezierPath];
+    [path moveToPoint:startPoint];
+    [path addLineToPoint:point];
+
+    double arrowAngle = M_PI / 4;
+    double startEndAngle = atan((point.y - startPoint.y) / (point.x - startPoint.x)) + ((point.x - startPoint.x) < 0 ? M_PI : 0);
+
+    CGPoint arrowLine1 = CGPointMake(point.x + POINTER_LINE_LENGTH * cos(M_PI - startEndAngle + arrowAngle), point.y - POINTER_LINE_LENGTH * sin(M_PI - startEndAngle + arrowAngle));
+
+    CGPoint arrowLine2 = CGPointMake(point.x + POINTER_LINE_LENGTH * cos(M_PI - startEndAngle - arrowAngle), point.y - POINTER_LINE_LENGTH * sin(M_PI - startEndAngle - arrowAngle));
+
+    [path addLineToPoint:arrowLine1];
+    [path moveToPoint:point];
+    [path addLineToPoint:arrowLine2];
 
     [self setPathSettings];
 }

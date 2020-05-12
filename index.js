@@ -104,6 +104,10 @@ SketchView.constants = {
     rectangle: {
       id: 2,
       name: 'Rectangle'
+    },
+    arrow: {
+      id: 3,
+      name: 'Arrow'
     }
   }
 };

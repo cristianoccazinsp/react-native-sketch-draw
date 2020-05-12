@@ -4,9 +4,6 @@ import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Created by keshav on 08/04/17.
- */
 
 public abstract class PathTrackingSketchTool extends SketchTool {
 

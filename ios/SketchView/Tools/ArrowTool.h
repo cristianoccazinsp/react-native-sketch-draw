@@ -2,6 +2,6 @@
 #import "ToolThickness.h"
 #import "ToolColor.h"
 
-@interface RectangleTool : SketchTool<ToolThickness, ToolColor>
+@interface ArrowTool : SketchTool<ToolThickness, ToolColor>
 
 @end

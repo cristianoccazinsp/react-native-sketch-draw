@@ -8,9 +8,7 @@ import android.view.View;
 
 import com.rnsketchview.utils.ToolUtils;
 
-/**
- * Created by keshav on 08/04/17.
- */
+
 public class EraseSketchTool extends PathTrackingSketchTool implements ToolThickness {
 
     private static final float DEFAULT_THICKNESS = 10;

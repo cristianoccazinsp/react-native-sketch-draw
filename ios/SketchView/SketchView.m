@@ -2,6 +2,7 @@
 #import "PenSketchTool.h"
 #import "EraserSketchTool.h"
 #import "RectangleTool.h"
+#import "ArrowTool.h"
 #import "NSMutableArray+QueueStack.h"
 #import "SketchViewContainer.h"
 
@@ -12,6 +13,7 @@
     PenSketchTool *penTool;
     EraserSketchTool *eraseTool;
     RectangleTool *rectangleTool;
+    ArrowTool *arrowTool;
     
     UIImage *incrementalImage;
     NSMutableArray *stack;
@@ -33,6 +35,7 @@
     penTool = [[PenSketchTool alloc] initWithTouchView:self];
     eraseTool = [[EraserSketchTool alloc] initWithTouchView:self];
     rectangleTool = [[RectangleTool alloc] initWithTouchView:self];
+    arrowTool = [[ArrowTool alloc] initWithTouchView:self];
     
     [self setToolType:SketchToolTypePen];
     
@@ -50,6 +53,9 @@
             break;
         case SketchToolTypeRectangle:
             currentTool = rectangleTool;
+            break;
+        case SketchToolTypeArrow:
+            currentTool = arrowTool;
             break;
         default:
             currentTool = penTool;
@@ -76,6 +82,7 @@
 {
     [penTool setToolColor:rgba];
     [rectangleTool setToolColor:rgba];
+    [arrowTool setToolColor:rgba];
 }
 
 -(UIColor *)getToolColor

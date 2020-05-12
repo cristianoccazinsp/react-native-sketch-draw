@@ -115,6 +115,8 @@ export default class DrawBoard extends Component {
 
 1. Pen - `SketchDraw.constants.toolType.pen`
 2. Eraser - `SketchDraw.constants.toolType.eraser`
+3. Rectangle - `SketchDraw.constants.toolType.rectangle`
+4. Arrow - `SketchDraw.constants.toolType.arrow`
 
 ### Props
 

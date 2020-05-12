@@ -7,14 +7,16 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
+import java.lang.Math.*;
 
 import com.rnsketchview.utils.ToolUtils;
 
 
-public class RectangleTool extends SketchTool implements ToolThickness, ToolColor {
+public class ArrowTool extends SketchTool implements ToolThickness, ToolColor {
 
     private static final float DEFAULT_THICKNESS = 5;
     private static final int DEFAULT_COLOR = Color.BLACK;
+    private static final double POINTER_LINE_LENGTH = 50;
 
     private float toolThickness;
     private int toolColor;
@@ -24,7 +26,7 @@ public class RectangleTool extends SketchTool implements ToolThickness, ToolColo
     private float startX = 0;
     private float startY = 0;
 
-    public RectangleTool(View touchView) {
+    public ArrowTool(View touchView) {
         super(touchView);
 
         setToolColor(DEFAULT_COLOR);
@@ -47,27 +49,40 @@ public class RectangleTool extends SketchTool implements ToolThickness, ToolColo
         startY = event.getY();
 
         path.reset();
-        RectF rect = new RectF(startX, startY, startX + 10, startY + 10);
-        path.addRect(rect, Path.Direction.CW);
         touchView.invalidate();
     }
 
-    private void drawRect(float endX, float endY){
+    private void drawArrow(float endX, float endY){
         path.reset();
-        RectF rect = new RectF(startX, startY, endX, endY);
-        rect.sort();
-        path.addRect(rect, Path.Direction.CW);
+
+        path.moveTo(startX, startY);
+        path.lineTo(endX, endY);
+
+        double arrowAngle = Math.PI / 4;
+        double startEndAngle = Math.atan((endY - startY) / (endX - startX)) + ((endX - startX) < 0 ? Math.PI : 0);
+
+        path.lineTo(
+            endX + (float)(POINTER_LINE_LENGTH * Math.cos(Math.PI - startEndAngle + arrowAngle)),
+            endY - (float)(POINTER_LINE_LENGTH * Math.sin(Math.PI - startEndAngle + arrowAngle))
+        );
+
+        path.moveTo(endX, endY);
+
+        path.lineTo(
+            endX + (float)(POINTER_LINE_LENGTH * Math.cos(Math.PI - startEndAngle - arrowAngle)),
+            endY - (float)(POINTER_LINE_LENGTH * Math.sin(Math.PI - startEndAngle - arrowAngle))
+        );
     }
 
     @Override
     void onTouchMove(MotionEvent event) {
-        drawRect(event.getX(), event.getY());
+        drawArrow(event.getX(), event.getY());
         touchView.invalidate();
     }
 
     @Override
     void onTouchUp(MotionEvent event) {
-        drawRect(event.getX(), event.getY());
+        drawArrow(event.getX(), event.getY());
         touchView.invalidate();
     }
 

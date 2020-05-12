@@ -1,11 +1,3 @@
-//
-//  PathTrackingSketchTool.m
-//  Sketch
-//
-//  Created by Keshav on 08/04/17.
-//  Copyright © 2017 Particle41. All rights reserved.
-//
-
 #import "PathTrackingSketchTool.h"
 
 @implementation PathTrackingSketchTool

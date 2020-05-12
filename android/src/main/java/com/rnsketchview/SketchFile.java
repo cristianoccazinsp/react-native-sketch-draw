@@ -1,8 +1,5 @@
 package com.rnsketchview;
 
-/**
- * Created by keshav on 07/04/17.
- */
 
 public class SketchFile {
     public String localFilePath;

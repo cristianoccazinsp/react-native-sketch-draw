@@ -4,15 +4,13 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Created by keshav on 08/04/17.
- */
 
 public abstract class SketchTool implements View.OnTouchListener {
 
     public static final int TYPE_PEN = 0;
     public static final int TYPE_ERASE = 1;
     public static final int TYPE_RECTANGLE = 2;
+    public static final int TYPE_ARROW = 3;
 
     View touchView;
 

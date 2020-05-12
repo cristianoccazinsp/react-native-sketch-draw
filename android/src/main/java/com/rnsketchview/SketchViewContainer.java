@@ -16,9 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-/**
- * Created by keshav on 06/04/17.
- */
+
 
 public class SketchViewContainer extends LinearLayout {
 

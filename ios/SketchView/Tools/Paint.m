@@ -1,11 +1,3 @@
-//
-//  PathPaint.m
-//  Sketch
-//
-//  Created by Keshav on 06/04/17.
-//  Copyright © 2017 Particle41. All rights reserved.
-//
-
 #import "Paint.h"
 
 @implementation Paint
