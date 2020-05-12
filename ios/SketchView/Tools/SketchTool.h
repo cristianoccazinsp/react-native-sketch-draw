@@ -11,7 +11,8 @@
 
 typedef NS_ENUM(NSInteger, SketchToolType) {
     SketchToolTypePen,
-    SketchToolTypeEraser
+    SketchToolTypeEraser,
+    SketchToolTypeRectangle
 };
 
 @interface SketchTool : NSObject

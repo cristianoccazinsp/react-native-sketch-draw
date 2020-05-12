@@ -12,6 +12,7 @@ public abstract class SketchTool implements View.OnTouchListener {
 
     public static final int TYPE_PEN = 0;
     public static final int TYPE_ERASE = 1;
+    public static final int TYPE_RECTANGLE = 2;
 
     View touchView;
 

@@ -7,7 +7,8 @@
 -(void) clear;
 -(void) undo;
 -(void)setToolType:(SketchToolType) toolType;
--(void)setToolColor:(NSMutableDictionary *)rgba;
+-(void)setToolColor:(UIColor *)rgba;
+-(UIColor *)getToolColor;
 -(void)setViewImage:(UIImage *)image;
 -(void)setMaxUndo:(NSInteger)max;
 

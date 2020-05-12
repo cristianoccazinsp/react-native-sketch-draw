@@ -1,6 +1,7 @@
 #import "SketchView.h"
 #import "PenSketchTool.h"
 #import "EraserSketchTool.h"
+#import "RectangleTool.h"
 #import "NSMutableArray+QueueStack.h"
 #import "SketchViewContainer.h"
 
@@ -8,8 +9,9 @@
 @implementation SketchView
 {
     SketchTool *currentTool;
-    SketchTool *penTool;
-    SketchTool *eraseTool;
+    PenSketchTool *penTool;
+    EraserSketchTool *eraseTool;
+    RectangleTool *rectangleTool;
     
     UIImage *incrementalImage;
     NSMutableArray *stack;
@@ -30,6 +32,7 @@
     stack = [NSMutableArray array];
     penTool = [[PenSketchTool alloc] initWithTouchView:self];
     eraseTool = [[EraserSketchTool alloc] initWithTouchView:self];
+    rectangleTool = [[RectangleTool alloc] initWithTouchView:self];
     
     [self setToolType:SketchToolTypePen];
     
@@ -44,6 +47,9 @@
             break;
         case SketchToolTypeEraser:
             currentTool = eraseTool;
+            break;
+        case SketchToolTypeRectangle:
+            currentTool = rectangleTool;
             break;
         default:
             currentTool = penTool;
@@ -64,9 +70,17 @@
     }
 }
 
+// keep pen tool as the source of truth
+// but set all that might need use color
 -(void)setToolColor:(UIColor *)rgba
 {
-    [(PenSketchTool *)penTool setToolColor:rgba];
+    [penTool setToolColor:rgba];
+    [rectangleTool setToolColor:rgba];
+}
+
+-(UIColor *)getToolColor
+{
+    return [penTool getToolColor];
 }
 
 -(void)setViewImage:(UIImage *)image

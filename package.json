@@ -1,30 +1,4 @@
 {
-  "_args": [
-    [
-      "github:cristianoccazinsp/react-native-sketch-draw",
-      "/Users/cristiano/Desktop/trabajo/zinspector/mobileRN/zinspector3"
-    ]
-  ],
-  "_from": "github:cristianoccazinsp/react-native-sketch-draw",
-  "_id": "react-native-sketch-draw@github:cristianoccazinsp/react-native-sketch-draw#d4818a1d8fd5080c00ea095cee6c4cbb51d94adb",
-  "_inBundle": false,
-  "_integrity": "",
-  "_location": "/react-native-sketch-draw",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "git",
-    "raw": "github:cristianoccazinsp/react-native-sketch-draw",
-    "rawSpec": "github:cristianoccazinsp/react-native-sketch-draw",
-    "saveSpec": "github:cristianoccazinsp/react-native-sketch-draw",
-    "fetchSpec": null,
-    "gitCommittish": null
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "github:cristianoccazinsp/react-native-sketch-draw#d4818a1d8fd5080c00ea095cee6c4cbb51d94adb",
-  "_spec": "github:cristianoccazinsp/react-native-sketch-draw",
-  "_where": "/Users/cristiano/Desktop/trabajo/zinspector/mobileRN/zinspector3",
   "author": {
     "name": "Victor Gamez",
     "email": "victor.gamez1596@gmail.com",
@@ -58,5 +32,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "3.3.0"
+  "version": "3.4.0"
 }

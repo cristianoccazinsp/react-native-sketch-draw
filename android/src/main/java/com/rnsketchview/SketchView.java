@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import com.rnsketchview.tools.EraseSketchTool;
 import com.rnsketchview.tools.PenSketchTool;
+import com.rnsketchview.tools.RectangleTool;
 import com.rnsketchview.tools.SketchTool;
 
 
@@ -22,8 +23,9 @@ public class SketchView extends View {
     SketchViewContainer mContainer;
     int maxUndo = 10;
     SketchTool currentTool;
-    SketchTool penTool;
-    SketchTool eraseTool;
+    PenSketchTool penTool;
+    EraseSketchTool eraseTool;
+    RectangleTool rectangleTool;
 
     Bitmap incrementalImage;
     LinkedList<Bitmap> stack;
@@ -35,6 +37,8 @@ public class SketchView extends View {
         stack = new LinkedList<Bitmap>();
         penTool = new PenSketchTool(this);
         eraseTool = new EraseSketchTool(this);
+        rectangleTool = new RectangleTool(this);
+
         setToolType(SketchTool.TYPE_PEN);
         setBackgroundColor(Color.TRANSPARENT);
     }
@@ -46,6 +50,9 @@ public class SketchView extends View {
                 break;
             case SketchTool.TYPE_ERASE:
                 currentTool = eraseTool;
+                break;
+            case SketchTool.TYPE_RECTANGLE:
+                currentTool = rectangleTool;
                 break;
             default:
                 currentTool = penTool;
@@ -67,8 +74,15 @@ public class SketchView extends View {
         }
     }
 
+    // keep pen tool as the source of truth
+    // but set all that might need use color
     public void setToolColor(int toolColor) {
-        ((PenSketchTool) penTool).setToolColor(toolColor);
+        penTool.setToolColor(toolColor);
+        rectangleTool.setToolColor(toolColor);
+    }
+
+    public int getToolColor() {
+        return penTool.getToolColor();
     }
 
     public void setViewImage(Bitmap bitmap) {

@@ -100,6 +100,10 @@ SketchView.constants = {
     eraser: {
       id: 1,
       name: 'Eraser'
+    },
+    rectangle: {
+      id: 2,
+      name: 'Rectangle'
     }
   }
 };
