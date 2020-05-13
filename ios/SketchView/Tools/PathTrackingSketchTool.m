@@ -14,19 +14,23 @@
     [_path removeAllPoints];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.touchView];
     [_path moveToPoint:point];
+    
+    return YES;
 }
 
--(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.touchView];
     [_path addLineToPoint:point];
     [self.touchView setNeedsDisplay];
+    
+    return YES;
 }
 
 -(BOOL)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -41,9 +45,7 @@
 
 -(BOOL)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self touchesEnded:touches withEvent:event];
-
-    return YES;
+    return [self touchesEnded:touches withEvent:event];
 }
 
 @end

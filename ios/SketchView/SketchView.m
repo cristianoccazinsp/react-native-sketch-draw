@@ -47,9 +47,19 @@
 
 -(void)setToolType:(SketchToolType) toolType
 {
+    
+    // clear current tool
     if(currentTool){
-        [currentTool clear];
-        [self setNeedsDisplay];
+        
+        // if switching from text tool
+        // commit any unsaved changes
+        if([currentTool hasData]){
+            [self takeSnapshot];
+        }
+        else{
+            [currentTool clear];
+            [self setNeedsDisplay];
+        }
     }
     
     switch (toolType) {
@@ -67,6 +77,9 @@
             break;
         case SketchToolTypeText:
             currentTool = textTool;
+            
+            // prompt text automatically on select
+            [textTool promptText];
             break;
         default:
             currentTool = penTool;

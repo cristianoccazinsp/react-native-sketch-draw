@@ -9,14 +9,18 @@
     return self;
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self doesNotRecognizeSelector:_cmd];
+    
+    return YES;
 }
 
--(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self doesNotRecognizeSelector:_cmd];
+    
+    return YES;
 }
 
 -(BOOL)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -41,6 +45,11 @@
 -(void)clear
 {
     [self doesNotRecognizeSelector:_cmd];
+}
+
+-(BOOL)hasData
+{
+    return NO;
 }
 
 @end

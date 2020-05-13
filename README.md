@@ -117,7 +117,8 @@ export default class DrawBoard extends Component {
 2. Eraser - `SketchDraw.constants.toolType.eraser`
 3. Rectangle - `SketchDraw.constants.toolType.rectangle`
 4. Arrow - `SketchDraw.constants.toolType.arrow`
-4. Text - `SketchDraw.constants.toolType.text` (TODO for android)
+4. Text - `SketchDraw.constants.toolType.text`
+    * prompts on select
 
 ### Props
 

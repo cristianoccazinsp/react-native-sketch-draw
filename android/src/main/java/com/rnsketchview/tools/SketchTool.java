@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
-public abstract class SketchTool implements View.OnTouchListener {
+public abstract class SketchTool {
 
     public static final int TYPE_PEN = 0;
     public static final int TYPE_ERASE = 1;
@@ -20,35 +20,22 @@ public abstract class SketchTool implements View.OnTouchListener {
     }
 
     public abstract void render(Canvas canvas);
-
     public abstract void clear();
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        int action = event.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                onTouchDown(event);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                onTouchMove(event);
-                break;
-            case MotionEvent.ACTION_UP:
-                onTouchUp(event);
-                break;
-            case MotionEvent.ACTION_CANCEL:
-                onTouchCancel(event);
-                break;
-        }
-        return true;
+    // Implement this to hint that the tool has pending data
+    // and it should commit before clearing / switching
+    public boolean hasData(){
+        return false;
     }
 
-    abstract void onTouchDown(MotionEvent event);
 
-    abstract void onTouchMove(MotionEvent event);
+    // Result will be used for snapshoting purposes
+    public abstract boolean onTouchDown(MotionEvent event);
 
-    abstract void onTouchUp(MotionEvent event);
+    public abstract boolean onTouchMove(MotionEvent event);
 
-    abstract void onTouchCancel(MotionEvent event);
+    public abstract boolean onTouchUp(MotionEvent event);
+
+    public abstract boolean onTouchCancel(MotionEvent event);
 
 }

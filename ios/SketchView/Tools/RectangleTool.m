@@ -6,6 +6,7 @@
     UIBezierPath *path;
     Paint *paint;
     CGPoint startPoint;
+    BOOL moved;
 }
 
 
@@ -15,6 +16,7 @@
 
     path = [UIBezierPath bezierPath];
     paint = [[Paint alloc] init];
+    moved = NO;
 
     [self setToolColor:[UIColor blackColor]];
     [self setToolThickness:5];
@@ -63,10 +65,11 @@
 
 -(void)clear
 {
+    moved = NO;
     [path removeAllPoints];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.touchView];
@@ -74,6 +77,9 @@
 
     path = [UIBezierPath bezierPath];
     [self setPathSettings];
+    moved = NO;
+    
+    return YES;
 }
 
 -(void)setPathRect:(CGPoint)point
@@ -84,21 +90,28 @@
     [self setPathSettings];
 }
 
--(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    if ([touches count] == 1)
-    {
-        UITouch *touch = [touches anyObject];
-        CGPoint point = [touch locationInView:self.touchView];
-        [self setPathRect:point];
-        [self.touchView setNeedsDisplay];
-    }
+    moved = YES;
+    
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self.touchView];
+    [self setPathRect:point];
+    [self.touchView setNeedsDisplay];
+    
+    return YES;
 }
 
 -(BOOL)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.touchView];
+    
+    if(!moved){
+        [self.touchView setNeedsDisplay];
+        return NO;
+    }
+    
     [self setPathRect:point];
     [self.touchView setNeedsDisplay];
 
@@ -107,9 +120,7 @@
 
 -(BOOL)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self touchesEnded:touches withEvent:event];
-
-    return YES;
+    return [self touchesEnded:touches withEvent:event];
 }
 
 @end

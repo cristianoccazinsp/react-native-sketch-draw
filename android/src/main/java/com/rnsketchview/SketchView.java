@@ -47,9 +47,18 @@ public class SketchView extends View {
 
     public void setToolType(int toolType) {
 
+        // clear current tool
         if(currentTool != null){
-            currentTool.clear();
-            invalidate();
+
+            if(currentTool.hasData()){
+                setViewImage(drawBitmap());
+                currentTool.clear();
+            }
+            else{
+                currentTool.clear();
+                invalidate();
+            }
+
         }
 
         switch (toolType) {
@@ -67,6 +76,9 @@ public class SketchView extends View {
                 break;
             case SketchTool.TYPE_TEXT:
                 currentTool = textTool;
+
+                // prompt text automatically on select
+                textTool.promptText();
                 break;
             default:
                 currentTool = penTool;
@@ -158,12 +170,31 @@ public class SketchView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean value = currentTool.onTouch(this, event);
-        if(event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
+        boolean value = false;
+
+        int action = event.getAction();
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                value = currentTool.onTouchDown(event);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                value = currentTool.onTouchMove(event);
+                break;
+            case MotionEvent.ACTION_UP:
+                value = currentTool.onTouchUp(event);
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                value = currentTool.onTouchCancel(event);
+                break;
+        }
+
+        if(value && (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP)) {
             setViewImage(drawBitmap());
             currentTool.clear();
         }
-        return value;
+
+        return true;
     }
 
 }

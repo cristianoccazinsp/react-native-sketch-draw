@@ -5,6 +5,11 @@
 #import "Paint.h"
 
 
+// TODO: Accept values from user input
+#define TOOL_FONT_SIZE (35)
+#define TOOL_INSTRUCTIONS (@"The following text will be added. After pressing add, press and hold on the screen to drag and drop the text.")
+
+
 @implementation TextTool{
     Paint *paint;
     CGPoint startPoint;
@@ -22,11 +27,21 @@
 
     [self setToolColor:[UIColor blackColor]];
     [self setToolThickness:5];
-
+                   
     drawn = NO;
     prompted = nil;
 
     return self;
+}
+
+-(CGPoint)getDefaultPoint
+{
+    // align on center
+    double x = self.touchView.bounds.origin.x + self.touchView.bounds.size.width / 2;
+    
+    double y = self.touchView.bounds.origin.y + self.touchView.bounds.size.height / 2;
+    
+    return CGPointMake(x, y);
 }
 
 
@@ -68,21 +83,64 @@
     return paint.color;
 }
 
+-(BOOL)hasData
+{
+    if(prompted && drawn){
+        return YES;
+    }
+    return NO;
+}
+
 -(void)clear
 {
-    drawPoint = CGPointMake(0, 0);
     drawn = NO;
     prompted = nil;
 }
 
+-(void)promptText
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Add Text" message:TOOL_INSTRUCTIONS preferredStyle:UIAlertControllerStyleAlert];
+
+    __weak UIAlertController *weakAlert = alert;
+    __weak __typeof(self) weakSelf = self;
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        NSString *text = [weakAlert.textFields.firstObject text];
+        
+        if(text && ([text length] > 0)){
+            [weakSelf setPrompted:text];
+        }
+    }];
+
+    [alert addAction:defaultAction];
+
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Text...";
+        textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    }];
+
+
+    UIViewController *viewController = RCTPresentedViewController();
+
+    if (viewController == nil) {
+        RCTLogError(@"Tried to display alert view but there is no application window.");
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [viewController presentViewController:alert animated:NO completion:nil];
+    });
+}
+
 -(void)setPrompted:(NSString *)text{
     prompted = text;
-    drawPoint = CGPointMake(0, 0); // so user is forced to move it
-    [self drawPoint:drawPoint];
+    
+    [self drawPoint:[self getDefaultPoint]];
+    
     [self.touchView setNeedsDisplay];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.touchView];
@@ -90,14 +148,14 @@
     startPoint = point;
 
     if(prompted == nil){
-        // do nothing, handle text on press out
-        // we will display a placeholder in the meantime
+        [self promptText];
     }
     else{
-        drawPoint = point;
         [self drawPoint:point];
         [self.touchView setNeedsDisplay];
     }
+    
+    return YES;
 
 }
 
@@ -107,17 +165,16 @@
     drawn = YES;
 }
 
--(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     if(prompted != nil){
-        if ([touches count] == 1)
-        {
-            UITouch *touch = [touches anyObject];
-            CGPoint point = [touch locationInView:self.touchView];
-            [self drawPoint:point];
-            [self.touchView setNeedsDisplay];
-        }
+        UITouch *touch = [touches anyObject];
+        CGPoint point = [touch locationInView:self.touchView];
+        [self drawPoint:point];
+        [self.touchView setNeedsDisplay];
     }
+    
+    return YES;
 }
 
 -(BOOL)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -131,46 +188,13 @@
         return YES;
     }
     else{
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Add Text" message:TOOL_INSTRUCTIONS preferredStyle:UIAlertControllerStyleAlert];
-
-        __weak UIAlertController *weakAlert = alert;
-        __weak __typeof(self) weakSelf = self;
-        
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            NSString *text = [weakAlert.textFields.firstObject text];
-            
-            if(text && ([text length] > 0)){
-                [weakSelf setPrompted:text];
-            }
-        }];
-
-        [alert addAction:defaultAction];
-
-        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"Text...";
-        }];
-
-
-        UIViewController *viewController = RCTPresentedViewController();
-
-        if (viewController == nil) {
-          RCTLogError(@"Tried to display alert view but there is no application window.");
-          return NO;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [viewController presentViewController:alert animated:YES completion:nil];
-        });
-        
         return NO;
     }
 }
 
 -(BOOL)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self touchesEnded:touches withEvent:event];
-
-    return NO;
+    return [self touchesEnded:touches withEvent:event];
 }
 
 @end

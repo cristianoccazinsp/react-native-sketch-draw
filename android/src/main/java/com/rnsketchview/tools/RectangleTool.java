@@ -23,6 +23,8 @@ public class RectangleTool extends SketchTool implements ToolThickness, ToolColo
     private Path path = new Path();
     private float startX = 0;
     private float startY = 0;
+    private boolean moved = false;
+
 
     public RectangleTool(View touchView) {
         super(touchView);
@@ -38,18 +40,20 @@ public class RectangleTool extends SketchTool implements ToolThickness, ToolColo
 
     @Override
     public void clear() {
+        moved = false;
         path.reset();
     }
 
     @Override
-    void onTouchDown(MotionEvent event) {
+    public boolean onTouchDown(MotionEvent event) {
         startX = event.getX();
         startY = event.getY();
+        moved = false;
 
         path.reset();
-        RectF rect = new RectF(startX, startY, startX + 10, startY + 10);
-        path.addRect(rect, Path.Direction.CW);
         touchView.invalidate();
+
+        return true;
     }
 
     private void drawRect(float endX, float endY){
@@ -60,20 +64,31 @@ public class RectangleTool extends SketchTool implements ToolThickness, ToolColo
     }
 
     @Override
-    void onTouchMove(MotionEvent event) {
+    public boolean onTouchMove(MotionEvent event) {
+        moved = true;
+
         drawRect(event.getX(), event.getY());
         touchView.invalidate();
+
+        return true;
     }
 
     @Override
-    void onTouchUp(MotionEvent event) {
+    public boolean onTouchUp(MotionEvent event) {
+        if(!moved){
+            touchView.invalidate();
+            return false;
+        }
+
         drawRect(event.getX(), event.getY());
         touchView.invalidate();
+
+        return true;
     }
 
     @Override
-    void onTouchCancel(MotionEvent event) {
-        onTouchUp(event);
+    public boolean onTouchCancel(MotionEvent event) {
+        return onTouchUp(event);
     }
 
     @Override
