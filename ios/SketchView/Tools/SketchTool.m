@@ -52,4 +52,9 @@
     return NO;
 }
 
+-(void)promptData
+{
+    [self doesNotRecognizeSelector:_cmd];
+}
+
 @end

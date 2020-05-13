@@ -47,19 +47,8 @@ public class SketchView extends View {
 
     public void setToolType(int toolType) {
 
-        // clear current tool
-        if(currentTool != null){
-
-            if(currentTool.hasData()){
-                setViewImage(drawBitmap());
-                currentTool.clear();
-            }
-            else{
-                currentTool.clear();
-                invalidate();
-            }
-
-        }
+        // clear/commit current tool
+        commit();
 
         switch (toolType) {
             case SketchTool.TYPE_PEN:
@@ -76,9 +65,6 @@ public class SketchView extends View {
                 break;
             case SketchTool.TYPE_TEXT:
                 currentTool = textTool;
-
-                // prompt text automatically on select
-                textTool.promptText();
                 break;
             default:
                 currentTool = penTool;
@@ -157,6 +143,26 @@ public class SketchView extends View {
         currentTool.clear();
         invalidate();
         mContainer.onDrawSketch(stack.size());
+    }
+
+    public void commit() {
+        if(currentTool != null){
+
+            if(currentTool.hasData()){
+                setViewImage(drawBitmap());
+                currentTool.clear();
+            }
+            else{
+                currentTool.clear();
+                invalidate();
+            }
+        }
+    }
+
+    public void promptData() {
+        if(currentTool != null){
+            currentTool.promptData();
+        }
     }
 
     @Override

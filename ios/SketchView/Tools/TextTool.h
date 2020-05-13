@@ -6,6 +6,4 @@
 
 @interface TextTool : SketchTool<ToolThickness, ToolColor>
 
--(void)promptText;
-
 @end

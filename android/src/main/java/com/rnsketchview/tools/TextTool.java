@@ -101,34 +101,7 @@ public class TextTool extends SketchTool implements ToolThickness, ToolColor {
     }
 
     @Override
-    public boolean onTouchDown(MotionEvent event) {
-        startX = event.getX();
-        startY = event.getY();
-
-        if(prompted != null){
-            // do nothing, handle text on press out
-            // we will display a placeholder in the meantime
-        }
-        else{
-            drawPoint(startX, startY);
-            touchView.invalidate();
-        }
-
-        return true;
-    }
-
-
-    @Override
-    public boolean onTouchMove(MotionEvent event) {
-        if(prompted != null){
-            drawPoint(event.getX(), event.getY());
-            touchView.invalidate();
-        }
-
-        return true;
-    }
-
-    public void promptText(){
+    public void promptData(){
         // prompt here
 
         AlertDialog.Builder builder = new AlertDialog.Builder(touchView.getContext());
@@ -174,8 +147,34 @@ public class TextTool extends SketchTool implements ToolThickness, ToolColor {
                     // do nothing if focus/keyboard not available
                 }
             }
-        }, 400);
+        }, 200);
+    }
 
+    @Override
+    public boolean onTouchDown(MotionEvent event) {
+        startX = event.getX();
+        startY = event.getY();
+
+        if(prompted == null){
+            promptData();
+        }
+        else{
+            drawPoint(startX, startY);
+            touchView.invalidate();
+        }
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onTouchMove(MotionEvent event) {
+        if(prompted != null){
+            drawPoint(event.getX(), event.getY());
+            touchView.invalidate();
+        }
+
+        return true;
     }
 
     @Override
@@ -183,14 +182,10 @@ public class TextTool extends SketchTool implements ToolThickness, ToolColor {
         if(prompted != null){
             drawPoint(event.getX(), event.getY());
             touchView.invalidate();
-
-            return true;
         }
-        else{
-            promptText();
 
-            return false;
-        }
+        // this tool has to be committed manually
+        return false;
     }
 
     @Override

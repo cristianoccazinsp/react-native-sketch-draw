@@ -89,6 +89,30 @@ RCT_EXPORT_METHOD(undoSketch:(nonnull NSNumber *)reactTag) {
     }];
 }
 
+RCT_EXPORT_METHOD(commitSketch:(nonnull NSNumber *)reactTag) {
+
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, SketchViewContainer *> *viewRegistry) {
+        SketchViewContainer *view = viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[SketchViewContainer class]]) {
+            RCTLogError(@"Cannot find SketchViewContainer with tag #%@", reactTag);
+            return;
+        }
+        [view.sketchView commit];
+    }];
+}
+
+RCT_EXPORT_METHOD(promptData:(nonnull NSNumber *)reactTag) {
+
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, SketchViewContainer *> *viewRegistry) {
+        SketchViewContainer *view = viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[SketchViewContainer class]]) {
+            RCTLogError(@"Cannot find SketchViewContainer with tag #%@", reactTag);
+            return;
+        }
+        [view.sketchView promptData];
+    }];
+}
+
 
 -(void)_onSaveSketch:(SketchFile *) sketchFile withContainer:(SketchViewContainer*)container
 {

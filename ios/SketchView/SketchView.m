@@ -45,10 +45,8 @@
     [self setBackgroundColor:[UIColor clearColor]];
 }
 
--(void)setToolType:(SketchToolType) toolType
+-(void) commit
 {
-    
-    // clear current tool
     if(currentTool){
         
         // if switching from text tool
@@ -61,6 +59,20 @@
             [self setNeedsDisplay];
         }
     }
+}
+
+-(void) promptData
+{
+    if(currentTool){
+        [currentTool promptData];
+    }
+}
+
+-(void)setToolType:(SketchToolType) toolType
+{
+    
+    // clear/commit current tool
+    [self commit];
     
     switch (toolType) {
         case SketchToolTypePen:
@@ -77,9 +89,6 @@
             break;
         case SketchToolTypeText:
             currentTool = textTool;
-            
-            // prompt text automatically on select
-            [textTool promptText];
             break;
         default:
             currentTool = penTool;

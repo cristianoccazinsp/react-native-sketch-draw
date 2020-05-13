@@ -37,7 +37,9 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
   private static final int COMMAND_CLEAR_SKETCH = 321;
   private static final int COMMAND_UNDO_SKETCH = 322;
   private static final int COMMAND_SAVE_SKETCH = 780;
+  private static final int COMMAND_COMMIT_SKETCH = 790;
   private static final int COMMAND_CHANGE_TOOL = 406;
+  private static final int COMMAND_PROMPT_DATA = 800;
 
   public static final String EVENT_ON_SAVE_SKETCH = "onSaveSketch";
   public static final String EVENT_ON_DRAW_SKETCH = "onDrawSketch";
@@ -82,7 +84,11 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
             "undoSketch",
             COMMAND_UNDO_SKETCH,
             "saveSketch",
-            COMMAND_SAVE_SKETCH);
+            COMMAND_SAVE_SKETCH,
+            "commitSketch",
+            COMMAND_COMMIT_SKETCH,
+            "promptData",
+            COMMAND_PROMPT_DATA);
   }
 
   @Override
@@ -109,6 +115,12 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
         } catch (IOException e) {
           e.printStackTrace();
         }
+      case COMMAND_COMMIT_SKETCH:
+        root.sketchView.commit();
+        return;
+      case COMMAND_PROMPT_DATA:
+        root.sketchView.promptData();
+        return;
       default:
         throw new IllegalArgumentException(String.format(Locale.ENGLISH, "Unsupported command %d.", commandId));
     }

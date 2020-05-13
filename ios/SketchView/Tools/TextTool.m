@@ -97,7 +97,7 @@
     prompted = nil;
 }
 
--(void)promptText
+-(void)promptData
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Add Text" message:TOOL_INSTRUCTIONS preferredStyle:UIAlertControllerStyleAlert];
 
@@ -148,7 +148,7 @@
     startPoint = point;
 
     if(prompted == nil){
-        [self promptText];
+        [self promptData];
     }
     else{
         [self drawPoint:point];
@@ -184,12 +184,10 @@
         CGPoint point = [touch locationInView:self.touchView];
         [self drawPoint:point];
         [self.touchView setNeedsDisplay];
-
-        return YES;
     }
-    else{
-        return NO;
-    }
+    
+    // this tool has to be committed manually
+    return NO;
 }
 
 -(BOOL)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

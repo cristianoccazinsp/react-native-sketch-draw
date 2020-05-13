@@ -6,6 +6,8 @@
 
 -(void) clear;
 -(void) undo;
+-(void) commit;
+-(void) promptData;
 -(void)setToolType:(SketchToolType) toolType;
 -(void)setToolColor:(UIColor *)rgba;
 -(UIColor *)getToolColor;

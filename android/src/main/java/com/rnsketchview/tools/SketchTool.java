@@ -28,6 +28,10 @@ public abstract class SketchTool {
         return false;
     }
 
+    public void promptData(){
+        // dummy
+    }
+
 
     // Result will be used for snapshoting purposes
     public abstract boolean onTouchDown(MotionEvent event);

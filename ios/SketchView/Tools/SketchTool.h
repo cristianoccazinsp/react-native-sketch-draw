@@ -25,5 +25,6 @@ typedef NS_ENUM(NSInteger, SketchToolType) {
 // Implement this to hint that the tool has pending data
 // and it should commit before clearing / switching
 -(BOOL)hasData;
+-(void)promptData;
 
 @end

@@ -110,6 +110,9 @@ export default class DrawBoard extends Component {
 3. `saveSketch(format, quality)` - Initiates saving of sketch.
     `format`: `JPEG` or `PNG` (default)
     `quality`: value from 1 to 100 for compression
+4. `commit()` - for tools (e.g., Text) that must be manually committed to apply changes.
+    Note that switching tools will also commit
+5. `promptData()` - for tools that need data, prompts for input
 
 #### Tool Types
 

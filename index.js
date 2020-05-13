@@ -89,6 +89,22 @@ class SketchView extends Component {
       [format || 'PNG', quality || 100],
     );
   }
+
+  commitSketch() {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.getViewManagerConfig('RNSketchView').Commands.commitSketch,
+      [],
+    );
+  }
+
+  promptData() {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.getViewManagerConfig('RNSketchView').Commands.promptData,
+      [],
+    );
+  }
 }
 
 SketchView.constants = {
