@@ -7,12 +7,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
-import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.app.AlertDialog;
 import android.view.Gravity;
 import android.text.InputType;
-import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.os.Handler;
 
 import com.rnsketchview.utils.ToolUtils;
 import com.rnsketchview.utils.TextRect;
@@ -159,14 +161,21 @@ public class TextTool extends SketchTool implements ToolThickness, ToolColor {
         final AlertDialog dialog = builder.show();
 
         // all this gibberish to focus keyboard
-        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            public void run() {
+                try {
+                    input.requestFocus();
+                    Context context = touchView.getContext();
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                }
+                catch (Exception e){
+                    // do nothing if focus/keyboard not available
                 }
             }
-        });
+        }, 400);
+
     }
 
     @Override
