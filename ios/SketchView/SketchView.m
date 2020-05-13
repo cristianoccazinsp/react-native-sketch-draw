@@ -3,6 +3,7 @@
 #import "EraserSketchTool.h"
 #import "RectangleTool.h"
 #import "ArrowTool.h"
+#import "TextTool.h"
 #import "NSMutableArray+QueueStack.h"
 #import "SketchViewContainer.h"
 
@@ -14,6 +15,7 @@
     EraserSketchTool *eraseTool;
     RectangleTool *rectangleTool;
     ArrowTool *arrowTool;
+    TextTool *textTool;
     
     UIImage *incrementalImage;
     NSMutableArray *stack;
@@ -36,6 +38,7 @@
     eraseTool = [[EraserSketchTool alloc] initWithTouchView:self];
     rectangleTool = [[RectangleTool alloc] initWithTouchView:self];
     arrowTool = [[ArrowTool alloc] initWithTouchView:self];
+    textTool = [[TextTool alloc] initWithTouchView:self];
     
     [self setToolType:SketchToolTypePen];
     
@@ -44,6 +47,11 @@
 
 -(void)setToolType:(SketchToolType) toolType
 {
+    if(currentTool){
+        [currentTool clear];
+        [self setNeedsDisplay];
+    }
+    
     switch (toolType) {
         case SketchToolTypePen:
             currentTool = penTool;
@@ -56,6 +64,9 @@
             break;
         case SketchToolTypeArrow:
             currentTool = arrowTool;
+            break;
+        case SketchToolTypeText:
+            currentTool = textTool;
             break;
         default:
             currentTool = penTool;
@@ -83,6 +94,7 @@
     [penTool setToolColor:rgba];
     [rectangleTool setToolColor:rgba];
     [arrowTool setToolColor:rgba];
+    [textTool setToolColor:rgba];
 }
 
 -(UIColor *)getToolColor
@@ -156,14 +168,17 @@
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [currentTool touchesEnded:touches withEvent:event];
-    [self takeSnapshot];
+    if([currentTool touchesEnded:touches withEvent:event]){
+        [self takeSnapshot];
+    }
+    
 }
 
 -(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [currentTool touchesCancelled:touches withEvent:event];
-    [self takeSnapshot];
+    if([currentTool touchesCancelled:touches withEvent:event]){;
+        [self takeSnapshot];
+    }
 }
 
 -(void)takeSnapshot

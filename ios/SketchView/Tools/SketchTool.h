@@ -5,7 +5,8 @@ typedef NS_ENUM(NSInteger, SketchToolType) {
     SketchToolTypePen,
     SketchToolTypeEraser,
     SketchToolTypeRectangle,
-    SketchToolTypeArrow
+    SketchToolTypeArrow,
+    SketchToolTypeText
 };
 
 @interface SketchTool : NSObject
@@ -16,8 +17,8 @@ typedef NS_ENUM(NSInteger, SketchToolType) {
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
--(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+-(BOOL)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+-(BOOL)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 -(void)render;
 -(void)clear;
 

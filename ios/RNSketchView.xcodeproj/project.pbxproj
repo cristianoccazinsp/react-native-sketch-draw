@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E711A3A246B4ACA00FB4120 /* ArrowTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E711A38246B4AC900FB4120 /* ArrowTool.m */; };
+		4E98249A246B7580009E54A3 /* TextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E982499246B7580009E54A3 /* TextTool.m */; };
 		4EAB867F246A34A900BD4C19 /* RectangleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EAB867D246A34A900BD4C19 /* RectangleTool.m */; };
 		4ED44F292460B9F5004E05A6 /* NSMutableArray+QueueStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ED44F272460B9F4004E05A6 /* NSMutableArray+QueueStack.m */; };
 		6B37E23B1E9D4235006883C6 /* SketchFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B37E2351E9D4235006883C6 /* SketchFile.m */; };
@@ -96,6 +97,8 @@
 		134814201AA4EA6300B7C361 /* libRNSketchView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNSketchView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E711A38246B4AC900FB4120 /* ArrowTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArrowTool.m; path = SketchView/Tools/ArrowTool.m; sourceTree = SOURCE_ROOT; };
 		4E711A39246B4ACA00FB4120 /* ArrowTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArrowTool.h; path = SketchView/Tools/ArrowTool.h; sourceTree = SOURCE_ROOT; };
+		4E982498246B7580009E54A3 /* TextTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextTool.h; path = SketchView/Tools/TextTool.h; sourceTree = SOURCE_ROOT; };
+		4E982499246B7580009E54A3 /* TextTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextTool.m; path = SketchView/Tools/TextTool.m; sourceTree = SOURCE_ROOT; };
 		4EAB867D246A34A900BD4C19 /* RectangleTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RectangleTool.m; path = SketchView/Tools/RectangleTool.m; sourceTree = SOURCE_ROOT; };
 		4EAB867E246A34A900BD4C19 /* RectangleTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RectangleTool.h; path = SketchView/Tools/RectangleTool.h; sourceTree = SOURCE_ROOT; };
 		4ED44F272460B9F4004E05A6 /* NSMutableArray+QueueStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueStack.m"; path = "SketchView/NSMutableArray+QueueStack.m"; sourceTree = SOURCE_ROOT; };
@@ -165,6 +168,8 @@
 				6B37E23F1E9D4256006883C6 /* EraserSketchTool.m */,
 				6B37E2401E9D4256006883C6 /* Paint.h */,
 				6B37E2411E9D4256006883C6 /* Paint.m */,
+				4E982498246B7580009E54A3 /* TextTool.h */,
+				4E982499246B7580009E54A3 /* TextTool.m */,
 				6B37E2421E9D4256006883C6 /* PathTrackingSketchTool.h */,
 				6B37E2431E9D4256006883C6 /* PathTrackingSketchTool.m */,
 				6B37E2441E9D4256006883C6 /* PenSketchTool.h */,
@@ -352,6 +357,7 @@
 				4ED44F292460B9F5004E05A6 /* NSMutableArray+QueueStack.m in Sources */,
 				6B37E23B1E9D4235006883C6 /* SketchFile.m in Sources */,
 				4E711A3A246B4ACA00FB4120 /* ArrowTool.m in Sources */,
+				4E98249A246B7580009E54A3 /* TextTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

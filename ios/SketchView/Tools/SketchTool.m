@@ -19,14 +19,18 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self doesNotRecognizeSelector:_cmd];
+
+    return YES;
 }
 
--(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(BOOL)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self doesNotRecognizeSelector:_cmd];
+
+    return YES;
 }
 
 -(void)render

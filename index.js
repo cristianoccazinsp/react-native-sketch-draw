@@ -108,6 +108,10 @@ SketchView.constants = {
     arrow: {
       id: 3,
       name: 'Arrow'
+    },
+    text: {
+      id: 4,
+      name: 'Text'
     }
   }
 };

@@ -8,11 +8,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import java.util.LinkedList;
 
+import com.rnsketchview.tools.SketchTool;
 import com.rnsketchview.tools.EraseSketchTool;
 import com.rnsketchview.tools.PenSketchTool;
 import com.rnsketchview.tools.RectangleTool;
 import com.rnsketchview.tools.ArrowTool;
-import com.rnsketchview.tools.SketchTool;
+import com.rnsketchview.tools.TextTool;
 
 
 public class SketchView extends View {
@@ -24,6 +25,7 @@ public class SketchView extends View {
     EraseSketchTool eraseTool;
     RectangleTool rectangleTool;
     ArrowTool arrowTool;
+    TextTool textTool;
 
     Bitmap incrementalImage;
     LinkedList<Bitmap> stack;
@@ -37,12 +39,19 @@ public class SketchView extends View {
         eraseTool = new EraseSketchTool(this);
         rectangleTool = new RectangleTool(this);
         arrowTool = new ArrowTool(this);
+        textTool = new TextTool(this);
 
         setToolType(SketchTool.TYPE_PEN);
         setBackgroundColor(Color.TRANSPARENT);
     }
 
     public void setToolType(int toolType) {
+
+        if(currentTool != null){
+            currentTool.clear();
+            invalidate();
+        }
+
         switch (toolType) {
             case SketchTool.TYPE_PEN:
                 currentTool = penTool;
@@ -55,6 +64,9 @@ public class SketchView extends View {
                 break;
             case SketchTool.TYPE_ARROW:
                 currentTool = arrowTool;
+                break;
+            case SketchTool.TYPE_TEXT:
+                currentTool = textTool;
                 break;
             default:
                 currentTool = penTool;
@@ -82,6 +94,7 @@ public class SketchView extends View {
         penTool.setToolColor(toolColor);
         rectangleTool.setToolColor(toolColor);
         arrowTool.setToolColor(toolColor);
+        textTool.setToolColor(toolColor);
     }
 
     public int getToolColor() {
