@@ -1,10 +1,8 @@
 # react-native-sketch-draw
 
-## For ReactNative v0.60
+## For ReactNative >= 0.60
 
 Forked from: https://github.com/VGamezz19/react-native-sketch-draw
-
-TODO: Update deprecated code
 
 A React Native component for touch based drawing supporting iOS and Android. Inspired by the libraries [react-native-sketch](https://github.com/jgrancher/react-native-sketch), [react-native-signature-capture](https://github.com/RepairShopr/react-native-signature-capture) and [react-native-sketch-view](https://github.com/keshavkaul/react-native-sketch-view)
 
@@ -121,7 +119,7 @@ export default class DrawBoard extends Component {
 3. Rectangle - `SketchDraw.constants.toolType.rectangle`
 4. Arrow - `SketchDraw.constants.toolType.arrow`
 4. Text - `SketchDraw.constants.toolType.text`
-    * prompts on select
+    * can prompt for input, and has to be committed
 
 ### Props
 
