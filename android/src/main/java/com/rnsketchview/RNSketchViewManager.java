@@ -3,7 +3,6 @@ package com.rnsketchview;
 
 import android.graphics.Color;
 import androidx.annotation.NonNull;
-import android.view.View;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.Arguments;
@@ -15,8 +14,6 @@ import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.rnsketchview.SketchFile;
-import com.rnsketchview.SketchViewContainer;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -33,13 +30,6 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
   private static final String PROPS_SELECTED_TOOL = "selectedTool";
   private static final String PROPS_MAX_UNDO = "maxUndo";
   private static final String PROPS_LOCAL_SOURCE_IMAGE_PATH  = "localSourceImagePath";
-
-  private static final int COMMAND_CLEAR_SKETCH = 321;
-  private static final int COMMAND_UNDO_SKETCH = 322;
-  private static final int COMMAND_SAVE_SKETCH = 780;
-  private static final int COMMAND_COMMIT_SKETCH = 790;
-  private static final int COMMAND_CHANGE_TOOL = 406;
-  private static final int COMMAND_PROMPT_DATA = 800;
 
   public static final String EVENT_ON_SAVE_SKETCH = "onSaveSketch";
   public static final String EVENT_ON_DRAW_SKETCH = "onDrawSketch";
@@ -75,39 +65,23 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
     viewContainer.openSketchFile(localSourceImagePath);
   }
 
-  @Nullable
   @Override
-  public Map<String, Integer> getCommandsMap() {
-    return MapBuilder.of(
-            "clearSketch",
-            COMMAND_CLEAR_SKETCH,
-            "undoSketch",
-            COMMAND_UNDO_SKETCH,
-            "saveSketch",
-            COMMAND_SAVE_SKETCH,
-            "commitSketch",
-            COMMAND_COMMIT_SKETCH,
-            "promptData",
-            COMMAND_PROMPT_DATA);
-  }
-
-  @Override
-  public void receiveCommand(SketchViewContainer root, int commandId, @Nullable ReadableArray args) {
+  public void receiveCommand(SketchViewContainer root, String commandId, @Nullable ReadableArray args) {
     Assertions.assertNotNull(root);
 
     switch (commandId) {
-      case COMMAND_CLEAR_SKETCH:
+      case "clearSketch":
         root.sketchView.clear();
         return;
-      case COMMAND_UNDO_SKETCH:
+      case "undoSketch":
         root.sketchView.undo();
         return;
-      case COMMAND_CHANGE_TOOL:
+      case "changeTool":
         Assertions.assertNotNull(args);
         int toolId = args.getInt(0);
         root.sketchView.setToolType(toolId);
         return;
-      case COMMAND_SAVE_SKETCH:
+      case "saveSketch":
         try {
           SketchFile sketchFile = root.saveToLocalCache(args.getString(0), args.getInt(1));
           onSaveSketch(root, sketchFile);
@@ -115,14 +89,14 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
         } catch (IOException e) {
           e.printStackTrace();
         }
-      case COMMAND_COMMIT_SKETCH:
+      case "commitSketch":
         root.sketchView.commit();
         return;
-      case COMMAND_PROMPT_DATA:
+      case "promptData":
         root.sketchView.promptData();
         return;
       default:
-        throw new IllegalArgumentException(String.format(Locale.ENGLISH, "Unsupported command %d.", commandId));
+        throw new IllegalArgumentException(String.format(Locale.ENGLISH, "Unsupported command %s.", commandId));
     }
   }
 
@@ -142,7 +116,7 @@ public class RNSketchViewManager extends SimpleViewManager<SketchViewContainer> 
   }
 
   @Override
-  public @Nullable Map getExportedCustomDirectEventTypeConstants() {
+  public @Nullable Map<String, Object> getExportedCustomDirectEventTypeConstants() {
     MapBuilder.Builder<String, Object> builder = MapBuilder.builder();
 
     builder.put(EVENT_ON_SAVE_SKETCH, MapBuilder.of("registrationName", EVENT_ON_SAVE_SKETCH));

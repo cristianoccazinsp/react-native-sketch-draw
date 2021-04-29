@@ -5,6 +5,7 @@ import java.lang.Math.*;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.content.Context;
@@ -134,18 +135,18 @@ public class TextTool extends SketchTool implements ToolThickness, ToolColor {
         final AlertDialog dialog = builder.show();
 
         // all this gibberish to focus keyboard
-        new Handler().postDelayed(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                try {
-                    input.requestFocus();
-                    Context context = touchView.getContext();
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-                }
-                catch (Exception e){
-                    // do nothing if focus/keyboard not available
-                }
+            try {
+                input.requestFocus();
+                Context context = touchView.getContext();
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+            }
+            catch (Exception e){
+                // do nothing if focus/keyboard not available
+            }
             }
         }, 200);
     }

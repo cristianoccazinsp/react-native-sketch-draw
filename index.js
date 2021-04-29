@@ -69,7 +69,7 @@ class SketchView extends Component {
   clearSketch() {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
-      UIManager.getViewManagerConfig('RNSketchView').Commands.clearSketch,
+      'clearSketch',
       [],
     );
   }
@@ -77,7 +77,7 @@ class SketchView extends Component {
   undoSketch() {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
-      UIManager.getViewManagerConfig('RNSketchView').Commands.undoSketch,
+      'undoSketch',
       [],
     );
   }
@@ -85,7 +85,7 @@ class SketchView extends Component {
   saveSketch(format, quality) {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
-      UIManager.getViewManagerConfig('RNSketchView').Commands.saveSketch,
+      'saveSketch',
       [format || 'PNG', quality || 100],
     );
   }
@@ -93,7 +93,7 @@ class SketchView extends Component {
   commitSketch() {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
-      UIManager.getViewManagerConfig('RNSketchView').Commands.commitSketch,
+      'commitSketch',
       [],
     );
   }
@@ -101,7 +101,7 @@ class SketchView extends Component {
   promptData() {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
-      UIManager.getViewManagerConfig('RNSketchView').Commands.promptData,
+      'promptData',
       [],
     );
   }
